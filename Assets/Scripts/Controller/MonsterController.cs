@@ -28,6 +28,9 @@ public class MonsterController : MonoBehaviour
     [SerializeField]
     float m_backwardsBias = 0.2f;
 
+    [SerializeField]
+    float m_monsterPullFrequency = 1.0f;
+
     Vector3 m_controlVelocity;
     Vector3 m_lastWeightedDir;
 
@@ -35,6 +38,8 @@ public class MonsterController : MonoBehaviour
     float[] m_rayHitDistances;
 
     int m_visionMask;
+
+    float m_monsterPullTimer = 0.0f;
 
     private void Awake()
     {
@@ -55,6 +60,10 @@ public class MonsterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* Update Pull timer */
+
+        m_monsterPullTimer += Time.deltaTime;
+
         /* Compute Vision Effects */
 
         Vector3 weightedDir = Vector3.zero;
@@ -109,9 +118,17 @@ public class MonsterController : MonoBehaviour
 
         float angAccel = Mathf.Min(Mathf.Abs(angle), 10.0f * m_accelMag) * Mathf.Sign(angle);
 
+        /* Compute Monster pull scale */
+
+        float pullScale = Mathf.Sin(m_monsterPullTimer * m_monsterPullFrequency);
+        if (pullScale < 0.0f)
+            pullScale *= 0.1f;
+        else if (pullScale > 0.5f)
+            pullScale = 1.0f;
+
         /* Apply motion */
 
-        m_controlVelocity = m_velDecayRate * m_controlVelocity + accel * Time.deltaTime;
+        m_controlVelocity = m_velDecayRate * m_controlVelocity + pullScale * accel * Time.deltaTime;
         transform.position += m_controlVelocity * Time.deltaTime;
         transform.rotation *= Quaternion.AngleAxis(angAccel * Time.deltaTime, Vector3.up);
     }

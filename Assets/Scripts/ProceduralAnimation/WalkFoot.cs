@@ -38,7 +38,7 @@ namespace ProceduralAnimation
         {
             get
             {
-                return m_footObjectRb.velocity.sqrMagnitude > 1e-2f || m_bezierStepTime < 1.0f;
+                return m_footObjectRb.velocity.sqrMagnitude > 1e-0f || m_bezierStepTime < 1.0f;
             }
         }
 
@@ -110,6 +110,7 @@ namespace ProceduralAnimation
             m_target = pos;
             SetNewTargetPosition(pos);
             transform.position = pos;
+            m_footObjectPhy.transform.position = pos;
         }
 
         #endregion

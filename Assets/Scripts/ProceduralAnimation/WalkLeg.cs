@@ -20,6 +20,8 @@ namespace ProceduralAnimation
             //Destroy(walkLegObj.GetComponent<Collider>());
             walkLegObj.transform.parent = parent;
             walkLegObj.name = "Leg";
+            Rigidbody rb = walkLegObj.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
             
             WalkLeg walkLeg = walkLegObj.AddComponent<WalkLeg>();
             walkLeg.m_legRadius = legRadius;
@@ -29,11 +31,18 @@ namespace ProceduralAnimation
 
             walkLeg.m_rotOffset = Quaternion.AngleAxis(90.0f, Vector3.right);
 
+            walkLeg.SetLegPose();
+
             return walkLeg;
         }
 
         // Update is called once per frame
         void Update()
+        {
+            SetLegPose();
+        }
+
+        public void SetLegPose()
         {
             Vector3 diff = m_footTransform.position - m_hipTransform.position;
             transform.position = m_hipTransform.position + diff / 2.0f;
