@@ -91,7 +91,7 @@ namespace ProceduralAnimation
             {
                 float posAngle = ((2.0f * Mathf.PI) / m_numFeet) * i;
                 m_feetOffset[i] = m_footPlacementDistance * new Vector3(Mathf.Cos(posAngle), 0.0f, Mathf.Sin(posAngle));
-                m_feet[i].transform.position = this.transform.position + this.transform.rotation * m_feetOffset[i];
+                m_feet[i].ResetAt(this.transform.position + this.transform.rotation * m_feetOffset[i]);
             }
 
             for (int i = 0; i < m_numFeet; ++i)

@@ -7,19 +7,51 @@ public class ArmCollider : MonoBehaviour
 {
     public Action onCollide = null;
 
+    public bool detectGrabbing = false;
+    public bool isGrabbing = false;
+
+    private Rigidbody m_currentGrabbedRigidbody = null;
+    private ConfigurableJoint m_currentGrabJoint = null;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Grabbable"))
+        if(detectGrabbing && !isGrabbing && collision.gameObject.CompareTag("Grabbable"))
         {
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+            m_currentGrabbedRigidbody = rb;
 
             ConfigurableJoint grabJoint = gameObject.AddComponent<ConfigurableJoint>();
-            grabJoint.SetAllJointMotions(ConfigurableJointMotion.Locked);
+            grabJoint.SetPdParamters(200.0f, 2.0f, 10.0f, 2.0f, 20.0f);
             grabJoint.connectedBody = rb;
-            grabJoint.connectedMassScale = 100.0f;
+            grabJoint.connectedMassScale = 10.0f;
+
+            m_currentGrabbedRigidbody = rb;
+            m_currentGrabJoint = grabJoint;
+
+            Grabbable grab = collision.gameObject.AddComponent<Grabbable>();
+            grab.onDestroy += DropGrabbedObject;
+
+            isGrabbing = true;
         }
 
         onCollide?.Invoke();
+    }
+
+    public void DropGrabbedObject()
+    {
+        if(m_currentGrabJoint != null)
+        {
+            Destroy(m_currentGrabJoint);
+        }
+
+        m_currentGrabbedRigidbody = null;
+        m_currentGrabJoint = null;
+
+        isGrabbing = false;
+    }
+
+    private void OnDestroy()
+    {
+        DropGrabbedObject();
     }
 }

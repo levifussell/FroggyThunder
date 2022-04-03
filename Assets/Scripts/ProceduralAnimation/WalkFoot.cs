@@ -60,18 +60,29 @@ namespace ProceduralAnimation
 
             GameObject footObjectPhy = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             footObjectPhy.transform.localScale = m_footRadius * Vector3.one;
+            footObjectPhy.transform.position = footObject.transform.position;
+            footObjectPhy.transform.rotation = footObject.transform.rotation;
             //ConfigurableJoint joint = footObjectPhy.AddComponent<ConfigurableJoint>();
             //joint.connectedBody = footRb;
             //joint.SetPdParamters(1000.0f, 1.0f, 1000.0f, 1.0f, 100.0f);
 
             VelocityController vel = footObjectPhy.AddComponent<VelocityController>();
-            vel.targetTransform = footRb.transform;
+            vel.targetTransform = footObject.transform;
 
             foot.m_footObjectKin = footObject;
             foot.m_footObjectPhy = footObjectPhy;
             foot.m_footObjectRb = footObjectPhy.GetComponent<Rigidbody>();
 
+            foot.SetPosition(footObject.transform.position);
+
             return foot;
+        }
+
+        public void SetPosition(Vector3 pos)
+        {
+            m_footObjectPhy.transform.position = pos;
+            m_footObjectKin.transform.position = pos;
+            m_footObjectRb.position = pos;
         }
 
         private void Start()
@@ -111,6 +122,7 @@ namespace ProceduralAnimation
             SetNewTargetPosition(pos);
             transform.position = pos;
             m_footObjectPhy.transform.position = pos;
+            SetPosition(pos);
         }
 
         #endregion

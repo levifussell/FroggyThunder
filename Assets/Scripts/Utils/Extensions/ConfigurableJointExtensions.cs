@@ -20,6 +20,20 @@ public static class ConfigurableJointExtensions
         joint.angularZMotion = motion;
     }
 
+    public static void SetPositionJointMotions(this ConfigurableJoint joint, ConfigurableJointMotion motion)
+    {
+        joint.xMotion = motion;
+        joint.yMotion = motion;
+        joint.zMotion = motion;
+    }
+    
+    public static void SetRotationJointMotions(this ConfigurableJoint joint, ConfigurableJointMotion motion)
+    {
+        joint.angularXMotion = motion;
+        joint.angularYMotion = motion;
+        joint.angularZMotion = motion;
+    }
+
     /// <summary>
     /// Easy way to quickly set the most important joint params for PD control.
     /// </summary>

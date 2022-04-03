@@ -44,6 +44,7 @@ public class ArmController : MonoBehaviour
     private void OnDestroy()
     {
         m_armCollider.onCollide -= LaunchReturnArm;
+        Destroy(m_armCollider);
     }
 
     // Update is called once per frame
@@ -51,13 +52,22 @@ public class ArmController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(clickRay, out RaycastHit hit, 100.0f, ~0, QueryTriggerInteraction.Collide))
+            if (m_armCollider.isGrabbing)
             {
-                Vector3 hitDiff = hit.point - originArmPosGlobal;
-                Vector3 targetPos = originArmPosGlobal + hitDiff.normalized * Mathf.Min(hitDiff.magnitude, m_maxDistance);
-                GoToNewTargetGlobal(targetPos);
-                m_cameraFollowIndicator.transform.position = targetPos;
+                m_armCollider.DropGrabbedObject();
+            }
+            else
+            {
+                Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(clickRay, out RaycastHit hit, 100.0f, ~0, QueryTriggerInteraction.Collide))
+                {
+                    Vector3 hitDiff = hit.point - originArmPosGlobal;
+                    Vector3 targetPos = originArmPosGlobal + hitDiff.normalized * Mathf.Min(hitDiff.magnitude, m_maxDistance);
+                    GoToNewTargetGlobal(targetPos);
+                    m_cameraFollowIndicator.transform.position = targetPos;
+
+                    m_armCollider.detectGrabbing = true;
+                }
             }
         }
     }
@@ -107,6 +117,8 @@ public class ArmController : MonoBehaviour
 
     IEnumerator ReturnToArm()
     {
+        m_armCollider.detectGrabbing = false;
+
         transform.parent = m_originParent;
         Vector3 midPoint = transform.localPosition + (m_originArmPosLocal - transform.localPosition) * 0.5f;
         m_curveToTarget = new BezierCurve3(m_originArmPosLocal, midPoint, transform.localPosition);

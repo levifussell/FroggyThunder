@@ -21,6 +21,8 @@ namespace ProceduralAnimation
         [SerializeField]
         float m_upperArmRadius = 0.1f;
 
+        public ArmController armController = null;
+
         public GameObject[] physHands;
 
         private void Awake()
@@ -78,7 +80,7 @@ namespace ProceduralAnimation
 
                 if(i == 1)
                 {
-                    ArmController armController = m_upperArmObj.AddComponent<ArmController>();
+                    armController = m_upperArmObj.AddComponent<ArmController>();
                     ArmCollider armCollider = armObjectPhy.AddComponent<ArmCollider>();
                     armController.m_armCollider = armCollider;
                 }

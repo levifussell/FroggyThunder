@@ -44,6 +44,12 @@ namespace ProceduralAnimation
 
         public void SetLegPose()
         {
+            if(m_hipTransform == null || m_footTransform == null)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+
             Vector3 diff = m_footTransform.position - m_hipTransform.position;
             transform.position = m_hipTransform.position + diff / 2.0f;
             transform.localScale = new Vector3(m_legRadius, diff.magnitude * 0.5f, m_legRadius);
