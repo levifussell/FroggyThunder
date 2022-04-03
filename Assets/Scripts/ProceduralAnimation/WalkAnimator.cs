@@ -11,6 +11,9 @@ namespace ProceduralAnimation
         private WalkBody m_body = null;
 
         [SerializeField]
+        private bool m_randomFootPlacement = false;
+
+        [SerializeField]
         private int m_numFeet = 2;
 
         [SerializeField]
@@ -18,6 +21,12 @@ namespace ProceduralAnimation
 
         [SerializeField]
         private float m_footSpeed = 5.0f;
+
+        [SerializeField]
+        private float m_footStepHeightMin = 1.0f;
+
+        [SerializeField]
+        private float m_footStepHeightMax = 1.0f;
 
         [SerializeField]
         private float m_footPlacementDistance = 0.1f;
@@ -37,7 +46,12 @@ namespace ProceduralAnimation
         [SerializeField]
         private CharacterController m_characterController = null;
 
-        private float m_maxProjectHeight = 10.0f;
+        private float m_maxProjectHeight
+        {
+            get { return m_footStepHeightMax * 3.0f; }
+        }
+
+        private int m_maxNumActiveFeet;
 
         private WalkFoot[] m_feet;
         private WalkLeg[] m_leg;
@@ -53,6 +67,8 @@ namespace ProceduralAnimation
 
         private void Awake()
         {
+            m_maxNumActiveFeet = Mathf.Max(0, m_numFeet - 2);
+
             /* Build Feet */
 
             m_feet = new WalkFoot[m_numFeet];
@@ -60,7 +76,7 @@ namespace ProceduralAnimation
 
             for (int i = 0; i < m_numFeet; ++i)
             {
-                m_feet[i] = WalkFoot.Build(transform, m_footRadius, m_footSpeed);
+                m_feet[i] = WalkFoot.Build(transform, m_footRadius, m_footSpeed, m_footStepHeightMin, m_footStepHeightMax);
             }
 
             for (int i = 0; i < m_numFeet; ++i)
@@ -89,18 +105,32 @@ namespace ProceduralAnimation
         // Update is called once per frame
         void Update()
         {
-            if (numActiveFeet == 0 && (CheckIfNoSupportFootHull(out float distFromSupport) || CheckIfAnyFootTooLong()))
+            if (numActiveFeet <= m_maxNumActiveFeet)
             {
-                int indexToProject = FindNextFootIndexToProject();
+                List<int> indicesToProject = GetIndicesOfFeetTooLong();
 
-                distFromSupport = Mathf.Clamp(m_characterController.velocity.magnitude * m_strideVelocityScale, m_minFootStrideDistance, m_maxFootStrideDistance);
+                if(CheckIfNoSupportFootHull(out float distFromSupport))
+                {
+                    indicesToProject.Add(FindNextFootIndexToProject());
+                }
 
-                Vector3 projectFromPos = this.transform.position +
-                                            this.transform.rotation * m_feetOffset[indexToProject] +
-                                            this.transform.forward * distFromSupport;
-                ProjectFootAtIndex(indexToProject, projectFromPos, m_footRadius, m_maxProjectHeight);
+                for(int i = 0; i < indicesToProject.Count; ++i)
+                {
+                    int idx = indicesToProject[i];
 
-                m_body.StartNewStep();
+                    if(m_randomFootPlacement)
+                        distFromSupport = Random.Range(m_minFootStrideDistance, m_maxFootStrideDistance);
+                    else
+                        distFromSupport = Mathf.Clamp(m_characterController.velocity.magnitude * m_strideVelocityScale, m_minFootStrideDistance, m_maxFootStrideDistance);
+
+                    Vector3 projectFromPos = this.transform.position +
+                                                this.transform.rotation * m_feetOffset[idx] +
+                                                this.transform.forward * distFromSupport +
+                                                Vector3.up * m_footStepHeightMax * 2.0f;
+                    ProjectFootAtIndex(idx, projectFromPos, m_footRadius, m_maxProjectHeight);
+
+                    m_body.StartNewStep();
+                }
             }
         }
 
@@ -129,7 +159,7 @@ namespace ProceduralAnimation
             {
                 float localFootProjection = GetLocalFootProjectionAtIndex(i).sqrMagnitude;
 
-                if (localFootProjection > furthestLocalFootProjection)
+                if (!m_feet[i].isActive && localFootProjection > furthestLocalFootProjection)
                 {
                     furthestLocalFootProjection = localFootProjection;
                     furthestLocalFootProjectionIndex = i;
@@ -139,20 +169,23 @@ namespace ProceduralAnimation
             return furthestLocalFootProjectionIndex;
         }
 
-        private bool CheckIfAnyFootTooLong()
+        private List<int> GetIndicesOfFeetTooLong()
         {
-            bool isTooLong = false;
+            List<int> indices = new List<int>();
+
             for(int i = 0; i < m_numFeet; ++i)
             {
+                float localFootProjectionZ = GetLocalFootProjectionAtIndex(i).y;
+
                 float localFootProjectionMag = GetLocalFootProjectionAtIndex(i).sqrMagnitude;
-                if(localFootProjectionMag > m_maxLegDistance * m_maxLegDistance)
+
+                if(localFootProjectionZ < 0.0f && localFootProjectionMag > m_maxLegDistance * m_maxLegDistance)
                 {
-                    isTooLong = true;
-                    break;
+                    indices.Add(i);
                 }
             }
 
-            return isTooLong;
+            return indices;
         }
 
         private bool CheckIfNoSupportFootHull(out float distFromSupport)

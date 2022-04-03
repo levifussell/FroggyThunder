@@ -44,7 +44,6 @@ public class ArmController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);

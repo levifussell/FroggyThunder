@@ -12,7 +12,10 @@ namespace ProceduralAnimation
         float m_speedToTarget = 1.0f;
 
         [SerializeField]
-        float m_stepHeight = 1.0f;
+        public float m_stepHeightMin = 1.0f;
+
+        [SerializeField]
+        public float m_stepHeightMax = 1.0f;
 
         public float speedToTarget { get => m_speedToTarget; set => m_speedToTarget = value; }
 
@@ -37,7 +40,7 @@ namespace ProceduralAnimation
             }
         }
 
-        public static WalkFoot Build(Transform parent, float m_footRadius, float m_footSpeed)
+        public static WalkFoot Build(Transform parent, float m_footRadius, float m_footSpeed, float m_footStepHeightMin, float m_footStepHeightMax)
         {
             GameObject footObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Destroy(footObject.GetComponent<Collider>());
@@ -50,6 +53,8 @@ namespace ProceduralAnimation
             footObject.transform.localScale = m_footRadius * Vector3.one;
             WalkFoot foot = footObject.AddComponent<WalkFoot>();
             foot.speedToTarget = m_footSpeed;
+            foot.m_stepHeightMin = m_footStepHeightMin;
+            foot.m_stepHeightMax = m_footStepHeightMax;
 
             GameObject footObjectPhy = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             footObjectPhy.transform.localScale = m_footRadius * Vector3.one;
@@ -74,9 +79,6 @@ namespace ProceduralAnimation
 
         private void Update()
         {
-            //Vector3 diff = m_target - transform.position;
-            //transform.position += diff.normalized * Mathf.Min(m_speedToTarget * Time.deltaTime, diff.magnitude);
-
             m_bezierStepTime = Mathf.Clamp01(m_bezierStepTime + Time.deltaTime * m_speedToTarget);
             transform.position = m_stepCurve.Evaluate(m_bezierStepTime);
         }
@@ -95,7 +97,7 @@ namespace ProceduralAnimation
         {
             m_targetPrevious = m_target;
             m_target = pos;
-            Vector3 midPoint = (m_targetPrevious + (m_target - m_targetPrevious) / 2.0f) + Vector3.up * m_stepHeight;
+            Vector3 midPoint = (m_targetPrevious + (m_target - m_targetPrevious) / 2.0f) + Vector3.up * Random.Range(m_stepHeightMin, m_stepHeightMax);
             m_stepCurve = new BezierCurve3(m_target, midPoint, m_targetPrevious);
             m_bezierStepTime = 0.0f;
         }
