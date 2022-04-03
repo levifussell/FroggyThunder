@@ -61,7 +61,6 @@ public class CharacterController : MonoBehaviour
             accel += phyRootDiff * m_phyRootStrength;
         }
 
-
         /* Apply motion */
 
         accel = accel.normalized * m_accelMag;

@@ -14,14 +14,15 @@ namespace ProceduralAnimation
 
         Quaternion m_rotOffset;
 
-        public static WalkLeg Build(Transform parent, Transform hipTransform, Transform footTransform)
+        public static WalkLeg Build(Transform parent, Transform hipTransform, Transform footTransform, float legRadius)
         {
             GameObject walkLegObj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-            Destroy(walkLegObj.GetComponent<Collider>());
+            //Destroy(walkLegObj.GetComponent<Collider>());
             walkLegObj.transform.parent = parent;
             walkLegObj.name = "Leg";
             
             WalkLeg walkLeg = walkLegObj.AddComponent<WalkLeg>();
+            walkLeg.m_legRadius = legRadius;
             walkLeg.transform.localScale = Vector3.one * walkLeg.m_legRadius;
             walkLeg.m_hipTransform = hipTransform;
             walkLeg.m_footTransform = footTransform;

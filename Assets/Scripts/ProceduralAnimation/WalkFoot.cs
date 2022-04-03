@@ -29,6 +29,8 @@ namespace ProceduralAnimation
         GameObject m_footObjectPhy;
         Rigidbody m_footObjectRb;
 
+        public Vector3 target { get => m_target; }
+
         public GameObject footObjectPhy { get => m_footObjectPhy; }
         public Rigidbody footObjectRb { get => m_footObjectRb; }
 

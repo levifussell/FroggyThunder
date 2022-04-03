@@ -35,6 +35,7 @@ namespace ProceduralAnimation
                 m_upperArmObj.transform.parent = transform;
                 m_upperArmObj.transform.localPosition = new Vector3(m_armOffset * Mathf.Cos(posAngle), -m_upperArmLength, m_armOffset * Mathf.Sin(posAngle));
                 m_upperArmObj.transform.localScale = Vector3.one * m_upperArmRadius;
+                m_upperArmObj.layer = gameObject.layer;
 
                 Rigidbody armRb = m_upperArmObj.AddComponent<Rigidbody>();
                 armRb.isKinematic = true;
@@ -49,6 +50,7 @@ namespace ProceduralAnimation
                 //joint.SetPdParamters(1000.0f, 10.0f, 1000.0f, 10.0f, float.MaxValue);
                 VelocityController velController = armObjectPhy.AddComponent<VelocityController>();
                 velController.targetTransform = armRb.transform;
+                armObjectPhy.layer = gameObject.layer;
 
                 /* Create Shoulder Attach Point */
                 GameObject shoulderAttachObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -56,10 +58,12 @@ namespace ProceduralAnimation
                 shoulderAttachObj.transform.parent = m_phyShoulder.transform;
                 shoulderAttachObj.transform.position = m_phyShoulder.transform.position + new Vector3(m_armOffset * Mathf.Cos(posAngle), 0.0f, m_armOffset * Mathf.Sin(posAngle));
                 shoulderAttachObj.transform.localScale = m_upperArmRadius * Vector3.one;
+                shoulderAttachObj.layer = gameObject.layer;
 
                 /* Build Arm Connection */
 
-                WalkLeg.Build(transform, shoulderAttachObj.transform, armObjectPhy.transform);
+                WalkLeg armJoint = WalkLeg.Build(transform, shoulderAttachObj.transform, armObjectPhy.transform, m_upperArmRadius * 0.8f);
+                armJoint.gameObject.layer = gameObject.layer;
 
                 if(i == 1)
                 {

@@ -48,7 +48,7 @@ namespace ProceduralAnimation
 
         private float m_maxProjectHeight
         {
-            get { return m_footStepHeightMax * 3.0f; }
+            get { return m_footStepHeightMax * 4.0f; }
         }
 
         private int m_maxNumActiveFeet;
@@ -56,6 +56,8 @@ namespace ProceduralAnimation
         private WalkFoot[] m_feet;
         private WalkLeg[] m_leg;
         private Vector3[] m_feetOffset;
+
+        private int m_footMask;
 
         int numActiveFeet
         {
@@ -69,6 +71,8 @@ namespace ProceduralAnimation
         {
             m_maxNumActiveFeet = Mathf.Max(0, m_numFeet - 2);
 
+            m_footMask = ~LayerMask.GetMask(LayerMask.LayerToName(gameObject.layer));
+
             /* Build Feet */
 
             m_feet = new WalkFoot[m_numFeet];
@@ -77,6 +81,8 @@ namespace ProceduralAnimation
             for (int i = 0; i < m_numFeet; ++i)
             {
                 m_feet[i] = WalkFoot.Build(transform, m_footRadius, m_footSpeed, m_footStepHeightMin, m_footStepHeightMax);
+                m_feet[i].gameObject.layer = gameObject.layer;
+                m_feet[i].footObjectPhy.layer = gameObject.layer;
             }
 
             for (int i = 0; i < m_numFeet; ++i)
@@ -88,8 +94,8 @@ namespace ProceduralAnimation
 
             for (int i = 0; i < m_numFeet; ++i)
             {
-                ProjectFootAtIndex(i, m_feet[i].transform.position, m_footRadius * 0.5f, m_maxProjectHeight);
-                m_feet[i].ResetAt(m_feet[i].transform.position);
+                ProjectFootAtIndex(i, m_feet[i].transform.position, m_footRadius * 0.5f, 100.0f);
+                m_feet[i].ResetAt(m_feet[i].target);
             }
 
             /* Build Legs */
@@ -98,7 +104,8 @@ namespace ProceduralAnimation
 
             for(int i = 0; i < m_numFeet; ++i)
             {
-                m_leg[i] = WalkLeg.Build(transform, m_body.transform, m_feet[i].footObjectPhy.transform);
+                m_leg[i] = WalkLeg.Build(transform, m_body.transform, m_feet[i].footObjectPhy.transform, m_footRadius * 0.8f);
+                m_leg[i].gameObject.layer = gameObject.layer;
             }
         }
 
@@ -126,7 +133,7 @@ namespace ProceduralAnimation
                     Vector3 projectFromPos = this.transform.position +
                                                 this.transform.rotation * m_feetOffset[idx] +
                                                 this.transform.forward * distFromSupport +
-                                                Vector3.up * m_footStepHeightMax * 2.0f;
+                                                Vector3.up * m_footStepHeightMax * 1.5f;
                     ProjectFootAtIndex(idx, projectFromPos, m_footRadius, m_maxProjectHeight);
 
                     m_body.StartNewStep();
@@ -144,7 +151,7 @@ namespace ProceduralAnimation
 
         private void ProjectFootAtIndex(int footIndex, Vector3 projectFromPos, float footRadius, float maxProjectHeight)
         {
-            if (Physics.SphereCast(new Ray(projectFromPos, Vector3.down), footRadius, out RaycastHit hit, maxProjectHeight, ~0, QueryTriggerInteraction.Ignore))
+            if (Physics.SphereCast(new Ray(projectFromPos, Vector3.down), footRadius, out RaycastHit hit, maxProjectHeight, m_footMask, QueryTriggerInteraction.Ignore))
             {
                 m_feet[footIndex].SetNewTargetPosition(hit.point);
             }
