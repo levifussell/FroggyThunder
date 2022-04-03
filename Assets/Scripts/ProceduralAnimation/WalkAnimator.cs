@@ -8,7 +8,7 @@ namespace ProceduralAnimation
     public class WalkAnimator : MonoBehaviour
     {
         [SerializeField]
-        private WalkBody m_body = null;
+        public WalkBody m_body = null;
 
         [SerializeField]
         private bool m_randomFootPlacement = false;
@@ -56,6 +56,8 @@ namespace ProceduralAnimation
         private WalkFoot[] m_feet;
         private WalkLeg[] m_leg;
         private Vector3[] m_feetOffset;
+
+        public WalkFoot[] feet { get => m_feet; set => m_feet = value; }
 
         private int m_footMask;
 
@@ -114,17 +116,15 @@ namespace ProceduralAnimation
         {
             if (numActiveFeet <= m_maxNumActiveFeet)
             {
-                List<int> indicesToProject = GetIndicesOfFeetTooLong();
+                HashSet<int> indicesToProject = GetIndicesOfFeetTooLong();
 
                 if(CheckIfNoSupportFootHull(out float distFromSupport))
                 {
                     indicesToProject.Add(FindNextFootIndexToProject());
                 }
 
-                for(int i = 0; i < indicesToProject.Count; ++i)
+                foreach(int idx in indicesToProject)
                 {
-                    int idx = indicesToProject[i];
-
                     if(m_randomFootPlacement)
                         distFromSupport = Random.Range(m_minFootStrideDistance, m_maxFootStrideDistance);
                     else
@@ -136,8 +136,15 @@ namespace ProceduralAnimation
                                                 Vector3.up * m_footStepHeightMax * 1.5f;
                     ProjectFootAtIndex(idx, projectFromPos, m_footRadius, m_maxProjectHeight);
 
-                    m_body.StartNewStep();
+                    if (numActiveFeet > m_maxNumActiveFeet)
+                    {
+                        break;
+                    }
+
                 }
+
+                if(indicesToProject.Count > 0)
+                    m_body.StartNewStep();
             }
         }
 
@@ -176,9 +183,9 @@ namespace ProceduralAnimation
             return furthestLocalFootProjectionIndex;
         }
 
-        private List<int> GetIndicesOfFeetTooLong()
+        private HashSet<int> GetIndicesOfFeetTooLong()
         {
-            List<int> indices = new List<int>();
+            HashSet<int> indices = new HashSet<int>();
 
             for(int i = 0; i < m_numFeet; ++i)
             {

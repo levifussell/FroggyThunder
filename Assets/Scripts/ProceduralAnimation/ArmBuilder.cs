@@ -7,7 +7,7 @@ namespace ProceduralAnimation
     public class ArmBuilder : MonoBehaviour
     {
         [SerializeField]
-        Transform m_phyShoulder = null;
+        public Transform m_phyShoulder = null;
 
         [SerializeField]
         int m_numArms = 2;
@@ -21,9 +21,13 @@ namespace ProceduralAnimation
         [SerializeField]
         float m_upperArmRadius = 0.1f;
 
+        public GameObject[] physHands;
+
         private void Awake()
         {
             /* Upper Arm */
+
+            physHands = new GameObject[m_numArms];
 
             for (int i = 0; i < m_numArms; ++i)
             {
@@ -36,6 +40,7 @@ namespace ProceduralAnimation
                 m_upperArmObj.transform.localPosition = new Vector3(m_armOffset * Mathf.Cos(posAngle), -m_upperArmLength, m_armOffset * Mathf.Sin(posAngle));
                 m_upperArmObj.transform.localScale = Vector3.one * m_upperArmRadius;
                 m_upperArmObj.layer = gameObject.layer;
+                m_upperArmObj.name = "Hand";
 
                 Rigidbody armRb = m_upperArmObj.AddComponent<Rigidbody>();
                 armRb.isKinematic = true;
@@ -51,6 +56,8 @@ namespace ProceduralAnimation
                 VelocityController velController = armObjectPhy.AddComponent<VelocityController>();
                 velController.targetTransform = armRb.transform;
                 armObjectPhy.layer = gameObject.layer;
+                armObjectPhy.name = "phy_Hand";
+                physHands[i] = armObjectPhy;
 
                 /* Create Shoulder Attach Point */
                 GameObject shoulderAttachObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -59,11 +66,13 @@ namespace ProceduralAnimation
                 shoulderAttachObj.transform.position = m_phyShoulder.transform.position + new Vector3(m_armOffset * Mathf.Cos(posAngle), 0.0f, m_armOffset * Mathf.Sin(posAngle));
                 shoulderAttachObj.transform.localScale = m_upperArmRadius * Vector3.one;
                 shoulderAttachObj.layer = gameObject.layer;
+                shoulderAttachObj.name = "Shoulder";
 
                 /* Build Arm Connection */
 
                 WalkLeg armJoint = WalkLeg.Build(transform, shoulderAttachObj.transform, armObjectPhy.transform, m_upperArmRadius * 0.8f);
                 armJoint.gameObject.layer = gameObject.layer;
+                armJoint.name = "Leg";
 
                 if(i == 1)
                 {

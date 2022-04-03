@@ -41,6 +41,11 @@ public class ArmController : MonoBehaviour
         GoToNewTargetGlobal(transform.position);
     }
 
+    private void OnDestroy()
+    {
+        m_armCollider.onCollide -= LaunchReturnArm;
+    }
+
     // Update is called once per frame
     void Update()
     {

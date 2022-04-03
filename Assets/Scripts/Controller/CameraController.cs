@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    Transform m_followTransform = null;
+    public Transform followTransform = null;
 
     [SerializeField]
     float m_pitch = 30.0f;
@@ -18,7 +18,10 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = m_followTransform.position + new Vector3(0.0f, Mathf.Sin(pitchRad), Mathf.Cos(pitchRad)) * m_distance;
-        transform.rotation = Quaternion.LookRotation(m_followTransform.position - transform.position, Vector3.up);
+        if(followTransform != null)
+        {
+            transform.rotation = Quaternion.AngleAxis(m_pitch, followTransform.right) * Quaternion.LookRotation(followTransform.forward, Vector3.up);
+            transform.position = followTransform.position + new Vector3(0.0f, Mathf.Sin(pitchRad), 0.0f) * m_distance - transform.forward * m_distance;
+        }
     }
 }
