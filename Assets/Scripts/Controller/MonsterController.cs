@@ -54,7 +54,7 @@ public class MonsterController : MonoBehaviour
             m_rayDirections[i] = new Vector3(Mathf.Cos(angle), 0.0f, Mathf.Sin(angle));
         }
 
-        m_visionMask = ~LayerMask.GetMask("Character");
+        m_visionMask = ~LayerMask.GetMask("Monster");
     }
 
     // Update is called once per frame

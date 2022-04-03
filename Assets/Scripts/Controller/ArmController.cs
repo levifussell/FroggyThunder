@@ -10,7 +10,7 @@ public class ArmController : MonoBehaviour
     float m_speed = 5.0f;
 
     [SerializeField]
-    float m_maxDistance = 1.0f;
+    float m_maxDistance = 2.0f;
 
     [SerializeField]
     public ArmCollider m_armCollider = null;

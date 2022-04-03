@@ -20,7 +20,7 @@ public class CharacterKiller : MonoBehaviour
 
     private void Awake()
     {
-        m_monsterLayer = LayerMask.NameToLayer("Character");
+        m_monsterLayer = LayerMask.NameToLayer("Monster");
     }
 
     private void Start()
@@ -50,7 +50,6 @@ public class CharacterKiller : MonoBehaviour
     {
         if(collision.gameObject.layer == m_monsterLayer)
         {
-            Debug.Log("Monster Hit");
             Kill();
         }
     }
@@ -115,6 +114,8 @@ public class CharacterKiller : MonoBehaviour
             {
                 r.isKinematic = false;
                 r.useGravity = true;
+                r.tag = "Grabbable";
+                r.gameObject.layer = LayerMask.NameToLayer("Character");
             }
         }
 

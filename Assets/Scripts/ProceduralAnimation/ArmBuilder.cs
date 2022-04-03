@@ -57,6 +57,8 @@ namespace ProceduralAnimation
                 velController.targetTransform = armRb.transform;
                 armObjectPhy.layer = gameObject.layer;
                 armObjectPhy.name = "phy_Hand";
+                Rigidbody rbPhy = armObjectPhy.GetComponent<Rigidbody>();
+                rbPhy.freezeRotation = true;
                 physHands[i] = armObjectPhy;
 
                 /* Create Shoulder Attach Point */
