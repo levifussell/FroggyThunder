@@ -10,6 +10,9 @@ namespace ProceduralAnimation
         public Transform m_phyShoulder = null;
 
         [SerializeField]
+        public GameObject m_flashlightPrefab = null;
+
+        [SerializeField]
         int m_numArms = 2;
 
         [SerializeField]
@@ -24,6 +27,8 @@ namespace ProceduralAnimation
         public ArmController armController = null;
 
         public GameObject[] physHands;
+
+        public Flashlight flashlightObj = null;
 
         private void Awake()
         {
@@ -40,6 +45,7 @@ namespace ProceduralAnimation
                 Destroy(m_upperArmObj.GetComponent<Collider>());
                 m_upperArmObj.transform.parent = transform;
                 m_upperArmObj.transform.localPosition = new Vector3(m_armOffset * Mathf.Cos(posAngle), -m_upperArmLength, m_armOffset * Mathf.Sin(posAngle));
+                m_upperArmObj.transform.localRotation = Quaternion.AngleAxis(90.0f, Vector3.down);
                 m_upperArmObj.transform.localScale = Vector3.one * m_upperArmRadius;
                 m_upperArmObj.layer = gameObject.layer;
                 m_upperArmObj.name = "Hand";
@@ -60,7 +66,8 @@ namespace ProceduralAnimation
                 armObjectPhy.layer = gameObject.layer;
                 armObjectPhy.name = "phy_Hand";
                 Rigidbody rbPhy = armObjectPhy.GetComponent<Rigidbody>();
-                rbPhy.freezeRotation = true;
+                rbPhy.position = m_upperArmObj.transform.position;
+                //rbPhy.freezeRotation = true;
                 physHands[i] = armObjectPhy;
 
                 /* Create Shoulder Attach Point */
@@ -78,19 +85,45 @@ namespace ProceduralAnimation
                 armJoint.gameObject.layer = gameObject.layer;
                 armJoint.name = "Leg";
 
+                /* Add Control Arm */
+
                 if(i == 1)
                 {
                     armController = m_upperArmObj.AddComponent<ArmController>();
                     ArmCollider armCollider = armObjectPhy.AddComponent<ArmCollider>();
                     armController.m_armCollider = armCollider;
                 }
+                else if(i == 0)
+                {
+                    /* Add Flashlight Arm */
+
+                    GameObject flashLight = GameObject.Instantiate(m_flashlightPrefab);
+                    //flashLight.transform.position = physHands[0].transform.position;
+                    //VelocityController vc = flashLight.AddComponent<VelocityController>();
+                    //vc.targetTransform = physHands[0].transform;
+                    //Rigidbody rb = flashLight.GetComponent<Rigidbody>();
+                    //rb.freezeRotation = true;
+                    Rigidbody flashLightRb = flashLight.GetComponent<Rigidbody>();
+                    //flashLightRb.position = rbPhy.position;
+
+                    ConfigurableJoint flashJoint = physHands[0].AddComponent<ConfigurableJoint>();
+                    flashJoint.SetAllJointMotions(ConfigurableJointMotion.Locked);
+                    flashJoint.autoConfigureConnectedAnchor = false;
+                    flashJoint.connectedBody = flashLightRb;
+                    flashJoint.anchor = Vector3.zero;
+                    flashJoint.connectedAnchor = Vector3.zero;
+
+                    flashlightObj = flashLight.GetComponent<Flashlight>();
+                    flashlightObj.trackHand = physHands[0].transform;
+                    flashlightObj.trackJoint = flashJoint;
+                }
+
             }
         }
 
         // Start is called before the first frame update
         void Start()
         {
-
         }
 
         // Update is called once per frame

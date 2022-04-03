@@ -105,6 +105,12 @@ public class CharacterKiller : MonoBehaviour
             m_gameObjectsFromKill.Add(h);
         }
 
+        /* Remove Flashlight */
+
+        //Destroy(ac.flashlightObj.gameObject);
+        ac.flashlightObj.Drop();
+        ac.flashlightObj.TurnOff();
+
         /* Build Feet */
 
         WalkAnimator wa = m_playerTransform.GetComponentInChildren<WalkAnimator>();
@@ -187,28 +193,6 @@ public class CharacterKiller : MonoBehaviour
             m_gameObjectsFromKill.Add(t.gameObject);
         }
 
-        //foreach(GameObject g in m_gameObjectsFromKill)
-        //{
-        //    Rigidbody rb = g.GetComponent<Rigidbody>();
-        //    if(rb != null)
-        //    {
-        //        rb.isKinematic = true;
-        //    }
-
-        //    Collider c = g.GetComponent<Collider>();
-        //    if(c != null)
-        //    {
-        //        Destroy(c);
-        //    }
-
-        //    if(g.name.Equals("Leg"))
-        //    {
-        //        Destroy(g);
-        //    }
-
-        //    g.transform.position += Vector3Extensions.RandomSphere(0.4f);
-        //}
-
         m_isSacrificed = true;
 
         StartCoroutine(DoSacrifice(sacrificePosition, altarRight));
@@ -229,6 +213,10 @@ public class CharacterKiller : MonoBehaviour
             if (rb != null)
             {
                 rb.useGravity = false;
+                rb.velocity *= 0.0f;
+                rb.angularDrag = 10.0f;
+                rb.drag = 1.0f;
+                //rb.freezeRotation = true;
             }
         }
 
@@ -240,13 +228,15 @@ public class CharacterKiller : MonoBehaviour
             if (cn != null)
             {
                 foreach (ConfigurableJoint c in cn)
-                    c.SetPdParamters(100.0f, 1.0f, 1000.0f, 10.0f, 100.0f);
+                    //c.SetPdParamters(100.0f, 1.0f, 100.0f, 1.0f, 100.0f);
+                    c.SetAllJointMotions(ConfigurableJointMotion.Locked);
             }
         }
 
         /* Float Upwards Stage */
 
         Rigidbody bodyRb = m_playerTransform.GetComponentInChildren<ArmBuilder>().GetComponent<Rigidbody>();
+        Destroy(bodyRb.GetComponent<Collider>());
 
         //float timeFloatUpward = 4.0f;
         float floatSpeed = 0.02f;
@@ -255,6 +245,7 @@ public class CharacterKiller : MonoBehaviour
         {
             diff = sacrificePosition - bodyRb.position;
             bodyRb.velocity = (diff * floatSpeed) / Time.fixedDeltaTime;
+            bodyRb.angularVelocity = Vector3.zero;
 
             yield return new WaitForFixedUpdate();
 
@@ -264,7 +255,7 @@ public class CharacterKiller : MonoBehaviour
             if (totalSacrificeTime > MAX_SACRIFICE_TIME)
                 break;
 
-        } while (diff.magnitude > 0.3f);
+        } while (diff.magnitude > 1.0f);
 
         /* Rotate Stage */
 
@@ -289,6 +280,7 @@ public class CharacterKiller : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
                 rb.drag = 0.1f;
                 rb.angularDrag = 0.1f;
+                //rb.freezeRotation = false;
             }
         }
 

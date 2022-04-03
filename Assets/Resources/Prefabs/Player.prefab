@@ -376,10 +376,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_phyShoulder: {fileID: 8761974772299336386}
+  m_flashlightPrefab: {fileID: 60634926975849845, guid: 7845395d848538446bf1e723370885f8, type: 3}
   m_numArms: 2
   m_armOffset: 0.3
   m_upperArmLength: 0.2
   m_upperArmRadius: 0.15
+  armController: {fileID: 0}
   physHands: []
 --- !u!1 &8761974772246822035
 GameObject:
