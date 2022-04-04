@@ -328,6 +328,65 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9c03ee2db2218b4394e171943243869, type: 3}
+--- !u!1 &162294380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162294383}
+  - component: {fileID: 162294382}
+  - component: {fileID: 162294381}
+  m_Layer: 0
+  m_Name: DoorEnterDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &162294381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162294380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6899a96b71498d468650d6cdfa96745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_triggerDialogue: What is that in the distance...
+  m_dialogueManager: {fileID: 2027643448}
+--- !u!65 &162294382
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162294380}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &162294383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162294380}
+  m_LocalRotation: {x: -0, y: 0.3826832, z: -0, w: 0.9238796}
+  m_LocalPosition: {x: -19.34, y: 1.29, z: -19.31}
+  m_LocalScale: {x: 3.6985, y: 5.1032, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!1 &219348337
 GameObject:
   m_ObjectHideFlags: 0
@@ -5418,6 +5477,9 @@ MonoBehaviour:
   followTransform: {fileID: 0}
   m_pitch: 32
   m_distance: 7
+  rotationModeEnabled: 0
+  rotationTimer: 0
+  rotationSpeed: 10
 --- !u!81 &448002905
 AudioListener:
   m_ObjectHideFlags: 0
@@ -6292,8 +6354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4becfd24606eea48a586adc6c27169b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxAngle: 10
-  m_frequency: 1
+  m_maxAngle: 15
+  m_frequency: 3
 --- !u!114 &1451317612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7050,6 +7112,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905267507}
   m_CullTransparentMesh: 1
+--- !u!1 &1915530175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1915530178}
+  - component: {fileID: 1915530177}
+  - component: {fileID: 1915530176}
+  m_Layer: 0
+  m_Name: EndGameTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1915530176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915530175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b149c7c8242704697ff0f009440a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_cameraController: {fileID: 448002904}
+--- !u!65 &1915530177
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915530175}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1915530178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915530175}
+  m_LocalRotation: {x: -0, y: 0.7071064, z: -0, w: 0.7071072}
+  m_LocalPosition: {x: 6.48, y: 1.29, z: 10.94}
+  m_LocalScale: {x: 3.6985, y: 5.1032, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1931007499
 GameObject:
   m_ObjectHideFlags: 0
@@ -7477,3 +7597,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cameraController: {fileID: 448002904}
+--- !u!1 &2113894295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2113894298}
+  - component: {fileID: 2113894297}
+  - component: {fileID: 2113894296}
+  m_Layer: 0
+  m_Name: FindChildDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2113894296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113894295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6899a96b71498d468650d6cdfa96745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_triggerDialogue: My child! My child! Oh the gods of the lillypads have blessed
+    me!
+  m_dialogueManager: {fileID: 2027643448}
+--- !u!65 &2113894297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113894295}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &2113894298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113894295}
+  m_LocalRotation: {x: -0, y: 0.3826832, z: -0, w: 0.9238796}
+  m_LocalPosition: {x: -22.54, y: 1.29, z: -22.99}
+  m_LocalScale: {x: 3.6985, y: 5.1032, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}

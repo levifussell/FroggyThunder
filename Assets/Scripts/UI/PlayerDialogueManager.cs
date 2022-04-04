@@ -98,6 +98,11 @@ public class PlayerDialogueManager : MonoBehaviour
         //StartDialogue();
     }
 
+    public void PlayCustomDialogue(string dialogue)
+    {
+        m_dialogueUI.BeginNewDialogue(dialogue);
+    }
+
     void StartDialogue()
     {
         StopAllCoroutines();

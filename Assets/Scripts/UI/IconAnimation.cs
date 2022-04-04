@@ -8,7 +8,7 @@ public class IconAnimation : MonoBehaviour
     float m_maxAngle = 10.0f;
 
     [SerializeField]
-    float m_frequency = 1.0f;
+    float m_frequency = 4.0f;
 
     RectTransform m_rectTransform;
 

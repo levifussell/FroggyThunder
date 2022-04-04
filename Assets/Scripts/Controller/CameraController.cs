@@ -19,6 +19,10 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     float m_distance = 2.0f;
 
+    public bool rotationModeEnabled = false;
+    public float rotationTimer = 0.0f;
+    public float rotationSpeed = 10.0f;
+        
     CameraSettings m_startSettings;
 
     float pitchRad { get => m_pitch * Mathf.Deg2Rad; }
@@ -32,11 +36,21 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 forwardDir = Vector3.forward;
+
         if(followTransform != null)
         {
-            transform.rotation = Quaternion.AngleAxis(m_pitch, followTransform.right) * Quaternion.LookRotation(followTransform.forward, Vector3.up);
-            transform.position = followTransform.position + new Vector3(0.0f, Mathf.Sin(Mathf.Deg2Rad*pitchRad), 0.0f) * m_distance - transform.forward * m_distance;
+            forwardDir = followTransform.forward;
         }
+
+        if (rotationModeEnabled)
+        {
+            rotationTimer += Time.deltaTime;
+            forwardDir = Quaternion.AngleAxis(rotationTimer * rotationSpeed, Vector3.up) * forwardDir;
+        }
+
+        transform.rotation = Quaternion.AngleAxis(m_pitch, followTransform.right) * Quaternion.LookRotation(forwardDir, Vector3.up);
+        transform.position = followTransform.position + new Vector3(0.0f, Mathf.Sin(Mathf.Deg2Rad*pitchRad), 0.0f) * m_distance - transform.forward * m_distance;
     }
 
     public void SetSettings(CameraSettings settings, float timeSeconds)
