@@ -49,6 +49,7 @@ public class DialogueUI : MonoBehaviour
     public void BeginNewDialogue(string dialogue)
     {
         m_nextDialogue = dialogue;
+        StopAllCoroutines();
         dialogueWriter.ClearDialogue();
         speechPopup.BeginPopup();
     }

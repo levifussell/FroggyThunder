@@ -443,6 +443,7 @@ MonoBehaviour:
   m_minTimeToNextDialogueSeconds: 5
   m_maxTimeToNextDialogueSeconds: 30
   m_cameraController: {fileID: 1189942408}
+  m_playerSpawner: {fileID: 1969146836}
 --- !u!4 &173936205
 Transform:
   m_ObjectHideFlags: 0
@@ -471,7 +472,7 @@ GameObject:
   - component: {fileID: 331457555}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7669,6 +7670,7 @@ MonoBehaviour:
   - {x: 0, y: -0.97467643, z: 0, w: 0.22361974}
   m_cameraController: {fileID: 1189942408}
   m_spawnDelayTimeSeconds: 2
+  monsterSpawn: 0
 --- !u!4 &1969146837
 Transform:
   m_ObjectHideFlags: 0

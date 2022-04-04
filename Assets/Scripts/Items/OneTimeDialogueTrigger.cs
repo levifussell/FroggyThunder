@@ -12,6 +12,9 @@ public class OneTimeDialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player"))
+            return;
+
         m_dialogueManager.PlayCustomDialogue(m_triggerDialogue);
         Destroy(this.gameObject);
     }

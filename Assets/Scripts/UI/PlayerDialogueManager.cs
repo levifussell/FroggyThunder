@@ -21,6 +21,9 @@ public class PlayerDialogueManager : MonoBehaviour
     [SerializeField]
     CameraController m_cameraController = null;
 
+    [SerializeField]
+    PlayerSpawner m_playerSpawner = null;
+
     float m_startTimer = 0.0f;
 
     /* Scenario Flags */
@@ -32,6 +35,8 @@ public class PlayerDialogueManager : MonoBehaviour
     bool m_scenarioPlayerSeesMonster = false;
     bool m_scenarioPlayerSeesAltar = false;
     bool m_scenarioPlayerSeesBody = false;
+    bool m_scenarioFirstDeath = false;
+    bool m_scenarioMonsterSpawn = false;
 
     private void Update()
     {
@@ -49,7 +54,7 @@ public class PlayerDialogueManager : MonoBehaviour
 
         /* Check for scenarios */
 
-        if(!m_scenarioIntro1 && m_startTimer > 3.0f)
+        if(!m_scenarioIntro1 && m_startTimer > 2.0f)
         {
             m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[0]);
             m_scenarioIntro1 = true;
@@ -85,7 +90,7 @@ public class PlayerDialogueManager : MonoBehaviour
 
             if (!m_scenarioPlayerSeesAltar)
             {
-                if (hit.collider.gameObject.CompareTag("Altar"))
+                if (hit.collider.gameObject.CompareTag("Door"))
                 {
                     m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[4]);
                     m_scenarioPlayerSeesAltar = true;
@@ -102,6 +107,17 @@ public class PlayerDialogueManager : MonoBehaviour
             }
         }
 
+        if (!m_scenarioFirstDeath && m_playerSpawner.numSpawns > 1)
+        {
+            m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[7]);
+            m_scenarioFirstDeath = true;
+        }
+
+        if (!m_scenarioMonsterSpawn && m_playerSpawner.monsterSpawn)
+        {
+            m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[8]);
+            m_scenarioMonsterSpawn = true;
+        }
     }
 
     private IEnumerator Start()
@@ -131,13 +147,15 @@ public class PlayerDialogueManager : MonoBehaviour
 
     static string[] INSTRUCTION_DIALOGUE_OPTIONS =
     {
-        "Dang, the lights are out.",
-        "I need to find a way out of here...",
+        "Oh no, the lights just went out in my Thunder Cave.",
+        "I need to get out of here...",
         "What in the f*uit fly is that thing!",
         "Is that MY body??",
-        "Oh geez...that's not an altar. Tell me that's not an altar.",
-        "[Left click to grab]",
+        "What's this altar... and this door? I don't remember putting those there.",
+        "[Left click to grab + release]",
         "[WASD to move]",
+        "Holy tadpoles. \n...what happened.\n Did I just die?!",
+        "What was that noise? Hello?",
     };
 
     static string[] RANDOM_DIALOGUE_OPTIONS = 

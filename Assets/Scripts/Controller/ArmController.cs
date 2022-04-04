@@ -71,7 +71,7 @@ public class ArmController : MonoBehaviour
                 m_armMaterial.color = m_baseArmColor;
                 m_handMaterial.color = m_baseArmColor;
             }
-            else
+            else if(!m_armCollider.detectGrabbing)
             {
                 Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(clickRay, out RaycastHit hit, 100.0f, m_noPlayerMask, QueryTriggerInteraction.Ignore))

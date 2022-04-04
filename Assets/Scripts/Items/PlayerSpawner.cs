@@ -33,6 +33,11 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField]
     float m_spawnDelayTimeSeconds = 1.0f;
 
+    int m_numSpawns = 0;
+    public int numSpawns { get => m_numSpawns; }
+
+    public bool monsterSpawn = false;
+
     private void Awake()
     {
         if(m_spawnPositions.Count == 0)
@@ -75,6 +80,8 @@ public class PlayerSpawner : MonoBehaviour
 
     void SpawnNewPlayer(int index)
     {
+        m_numSpawns++;
+
         Vector3 spawnPosition = m_spawnPositions[index];
         Quaternion spawnRotation = m_spawnRotations[index];
 
@@ -124,6 +131,7 @@ public class PlayerSpawner : MonoBehaviour
         newMonster.transform.rotation = spawnRotation;
 
         //m_dialogueManager.m_monsterTransform = newMonster.transform;
+        monsterSpawn = true;
     }
 
     IEnumerator TimedSpawnMonster(float timeSeconds)

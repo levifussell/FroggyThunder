@@ -12,6 +12,9 @@ public class EndGameTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player"))
+            return;
+
         Destroy(m_cameraController.followTransform.GetComponent<CharacterController>());
         m_cameraController.rotationModeEnabled = true;
 
