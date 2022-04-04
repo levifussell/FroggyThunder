@@ -49,6 +49,9 @@ namespace ProceduralAnimation
         [SerializeField]
         private Material m_legMaterial = null;
 
+        [SerializeField]
+        private AudioClip m_footStepClip = null;
+
         private float m_maxProjectHeight
         {
             get { return m_footStepHeightMax * 4.0f; }
@@ -85,7 +88,7 @@ namespace ProceduralAnimation
 
             for (int i = 0; i < m_numFeet; ++i)
             {
-                m_feet[i] = WalkFoot.Build(transform, m_footRadius, m_footSpeed, m_footStepHeightMin, m_footStepHeightMax);
+                m_feet[i] = WalkFoot.Build(transform, m_footRadius, m_footSpeed, m_footStepHeightMin, m_footStepHeightMax, m_footStepClip);
                 m_feet[i].gameObject.layer = gameObject.layer;
                 m_feet[i].footObjectPhy.layer = gameObject.layer;
             }

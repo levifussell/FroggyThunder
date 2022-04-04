@@ -150,11 +150,14 @@ public class MonsterController : MonoBehaviour
 
         /* Draw Vision Sensors */
 
-        for(int i = 0; i < m_numRayCasts; ++i)
+        if(m_rayDirections.Length == m_numRayCasts)
         {
-            Vector3 rayDir = transform.rotation * m_rayDirections[i];
-            Gizmos.color = Color.Lerp(Color.red, Color.green, m_rayHitDistances[i] / m_viewRange);
-            Gizmos.DrawLine(transform.position, transform.position + rayDir * m_viewRange);
+            for(int i = 0; i < m_numRayCasts; ++i)
+            {
+                Vector3 rayDir = transform.rotation * m_rayDirections[i];
+                Gizmos.color = Color.Lerp(Color.red, Color.green, m_rayHitDistances[i] / m_viewRange);
+                Gizmos.DrawLine(transform.position, transform.position + rayDir * m_viewRange);
+            }
         }
     }
 }

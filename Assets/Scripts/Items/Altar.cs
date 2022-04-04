@@ -26,12 +26,17 @@ public class Altar : MonoBehaviour
 
     Material m_altarTopMaterial = null;
 
+    AudioSource m_audioSource = null;
+
     bool m_isSacrificing = false;
 
     private void Awake()
     {
         m_sacrificeParticles.Stop();
         m_altarTopMaterial = m_altarTop.GetComponent<MeshRenderer>().material;
+
+        m_audioSource = GetComponent<AudioSource>();
+        m_audioSource.volume = 0.1f;
 
         Color c = m_altarTopMaterial.color;
         c = new Color(m_altarTopMaterial.color.r, m_altarTopMaterial.color.g, m_altarTopMaterial.color.b, 0.0f);
@@ -88,6 +93,7 @@ public class Altar : MonoBehaviour
         m_isSacrificing = true;
         StopAllCoroutines();
         StartCoroutine(LightTurnOn());
+        StartCoroutine(AudioUp());
         StartCoroutine(RunBeginSacrificeEffect());
     }
 
@@ -97,6 +103,7 @@ public class Altar : MonoBehaviour
         m_doorToOpen.AddNewSacrifice();
         StopAllCoroutines();
         StartCoroutine(LightTurnOff());
+        StartCoroutine(AudioDown());
         StartCoroutine(RunEndSacrificeEffect());
     }
 
@@ -129,7 +136,8 @@ public class Altar : MonoBehaviour
         Color c = m_altarTopMaterial.color;
 
         // turn on flashlight.
-        m_previousFlash.TurnOn();
+        if(m_previousFlash != null)
+            m_previousFlash.TurnOn();
 
         while (c.a > 0.0f)
         {
@@ -163,6 +171,28 @@ public class Altar : MonoBehaviour
         }
 
         m_sacrificeLight.intensity = 0.0f;
+    }
+
+    IEnumerator AudioUp()
+    {
+        while(m_audioSource.volume < 1.0f)
+        {
+            m_audioSource.volume += 10.0f * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        m_audioSource.volume = 1.0f;
+    }
+
+    IEnumerator AudioDown()
+    {
+        while(m_audioSource.volume > 0.1f)
+        {
+            m_audioSource.volume -= 10.0f * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        m_audioSource.volume = 0.1f;
     }
 
     private void OnDrawGizmos()

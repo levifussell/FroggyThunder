@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8761974770581762665}
   - component: {fileID: 8761974770581762664}
   - component: {fileID: 8761974770581762663}
+  - component: {fileID: 3919613754703479881}
   m_Layer: 7
   m_Name: CharacterGhost
   m_TagString: Untagged
@@ -59,6 +60,7 @@ MonoBehaviour:
   m_maxLegDistance: 0.6
   m_characterController: {fileID: 8761974770581762663}
   m_legMaterial: {fileID: 2100000, guid: 8694c60eec7cac04b9194c69616c5db8, type: 2}
+  m_footStepClip: {fileID: 8300000, guid: 2e96238bbd001bb488c871b57d6852a8, type: 3}
 --- !u!114 &8761974770581762663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +79,14 @@ MonoBehaviour:
   m_phyRoot: {fileID: 8761974772462496633}
   m_phyRootThreshold: 0.3
   m_phyRootStrength: 20
+--- !u!81 &3919613754703479881
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761974770581762669}
+  m_Enabled: 1
 --- !u!1 &8761974771197575158
 GameObject:
   m_ObjectHideFlags: 0

@@ -82,6 +82,10 @@ public class PlayerSpawner : MonoBehaviour
         newPlayer.transform.position = new Vector3(spawnPosition.x, newPlayer.transform.position.y, spawnPosition.z);
         newPlayer.transform.rotation = spawnRotation;
 
+        if(m_cameraController.followTransform != null)
+        {
+            Destroy(m_cameraController.followTransform.GetComponentInChildren<AudioListener>());
+        }
         m_cameraController.followTransform = newPlayer.GetComponentInChildren<CharacterController>().transform;
         m_cameraController.RevertToOriginalSettings();
 
