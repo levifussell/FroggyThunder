@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public struct CameraSettings
+    {
+        public float pitch;
+        public float distance;
+    }
+
     [SerializeField]
     public Transform followTransform = null;
 
@@ -13,7 +19,15 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     float m_distance = 2.0f;
 
+    CameraSettings m_startSettings;
+
     float pitchRad { get => m_pitch * Mathf.Deg2Rad; }
+
+    private void Awake()
+    {
+        m_startSettings.pitch = m_pitch;
+        m_startSettings.distance = m_distance;
+    }
 
     // Update is called once per frame
     void Update()
@@ -21,7 +35,37 @@ public class CameraController : MonoBehaviour
         if(followTransform != null)
         {
             transform.rotation = Quaternion.AngleAxis(m_pitch, followTransform.right) * Quaternion.LookRotation(followTransform.forward, Vector3.up);
-            transform.position = followTransform.position + new Vector3(0.0f, Mathf.Sin(pitchRad), 0.0f) * m_distance - transform.forward * m_distance;
+            transform.position = followTransform.position + new Vector3(0.0f, Mathf.Sin(Mathf.Deg2Rad*pitchRad), 0.0f) * m_distance - transform.forward * m_distance;
         }
+    }
+
+    public void SetSettings(CameraSettings settings, float timeSeconds)
+    {
+        StopAllCoroutines();
+        StartCoroutine(TransitionSettings(settings, timeSeconds));
+    }
+
+    public void RevertToOriginalSettings()
+    {
+        SetSettings(m_startSettings, 0.3f);
+    }
+
+    IEnumerator TransitionSettings(CameraSettings newSettings, float timeSeconds)
+    {
+        float pitchRate = (newSettings.pitch - m_pitch) / timeSeconds;
+        float distRate = (newSettings.distance - m_distance) / timeSeconds;
+
+        while(Mathf.Abs(m_pitch - newSettings.pitch) > 1e-1f)
+        {
+            m_pitch += pitchRate * Time.fixedDeltaTime;
+            m_distance += distRate * Time.fixedDeltaTime;
+
+            Debug.Log(Mathf.Abs(m_pitch - newSettings.pitch));
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        m_pitch = newSettings.pitch;
+        m_distance = newSettings.distance;
     }
 }

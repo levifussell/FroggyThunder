@@ -28,12 +28,13 @@ public class DialogueWriter : MonoBehaviour
 
     public void StartNewDialogue(string dialogue)
     {
+        StopAllCoroutines();
         StartCoroutine(RunDialogueStream(dialogue));
     }
 
     public IEnumerator RunDialogueStream(string dialogue)
     {
-        textBox.text = "" + dialogue[0];
+        textBox.text = "";
 
         int currentCharIndex = 0;
         int totalCharacters = dialogue.Length;
