@@ -115,8 +115,12 @@ public class Altar : MonoBehaviour
         Color c = m_altarTopMaterial.color;
 
         // turn off flashlight.
-        m_previousFlash = FindObjectsOfType<Flashlight>().Where(x => x.isOn).ToArray()[0];
-        m_previousFlash.TurnOff();
+        Flashlight[] flashlights = FindObjectsOfType<Flashlight>();
+        if(flashlights.Length != 0)
+        {
+            m_previousFlash = flashlights.Where(x => x.isOn).ToArray()[0];
+            m_previousFlash.TurnOff();
+        }
 
         while (c.a < 1.0f)
         {
