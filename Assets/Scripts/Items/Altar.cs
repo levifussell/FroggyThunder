@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,9 +20,13 @@ public class Altar : MonoBehaviour
     [SerializeField]
     Door m_doorToOpen = null;
 
+    Flashlight m_previousFlash;
+
     Queue<CharacterKiller> m_sacrificeList = new Queue<CharacterKiller>();
 
     Material m_altarTopMaterial = null;
+
+    AudioSource m_audioSource = null;
 
     bool m_isSacrificing = false;
 
@@ -29,6 +34,9 @@ public class Altar : MonoBehaviour
     {
         m_sacrificeParticles.Stop();
         m_altarTopMaterial = m_altarTop.GetComponent<MeshRenderer>().material;
+
+        m_audioSource = GetComponent<AudioSource>();
+        m_audioSource.volume = 0.1f;
 
         Color c = m_altarTopMaterial.color;
         c = new Color(m_altarTopMaterial.color.r, m_altarTopMaterial.color.g, m_altarTopMaterial.color.b, 0.0f);
@@ -85,6 +93,7 @@ public class Altar : MonoBehaviour
         m_isSacrificing = true;
         StopAllCoroutines();
         StartCoroutine(LightTurnOn());
+        StartCoroutine(AudioUp());
         StartCoroutine(RunBeginSacrificeEffect());
     }
 
@@ -94,6 +103,7 @@ public class Altar : MonoBehaviour
         m_doorToOpen.AddNewSacrifice();
         StopAllCoroutines();
         StartCoroutine(LightTurnOff());
+        StartCoroutine(AudioDown());
         StartCoroutine(RunEndSacrificeEffect());
     }
 
@@ -102,8 +112,10 @@ public class Altar : MonoBehaviour
         m_sacrificeParticles.Play();
 
         Color c = m_altarTopMaterial.color;
-        //c = new Color(m_altarTopMaterial.color.r, m_altarTopMaterial.color.g, m_altarTopMaterial.color.b, 0.0f);
-        //m_altarTopMaterial.color = c;
+
+        // turn off flashlight.
+        m_previousFlash = FindObjectsOfType<Flashlight>().Where(x => x.isOn).ToArray()[0];
+        m_previousFlash.TurnOff();
 
         while (c.a < 1.0f)
         {
@@ -122,8 +134,10 @@ public class Altar : MonoBehaviour
         m_sacrificeParticles.Stop();
 
         Color c = m_altarTopMaterial.color;
-        //c = new Color(m_altarTopMaterial.color.r, m_altarTopMaterial.color.g, m_altarTopMaterial.color.b, 1.0f);
-        //m_altarTopMaterial.color = c;
+
+        // turn on flashlight.
+        if(m_previousFlash != null)
+            m_previousFlash.TurnOn();
 
         while (c.a > 0.0f)
         {
@@ -157,6 +171,28 @@ public class Altar : MonoBehaviour
         }
 
         m_sacrificeLight.intensity = 0.0f;
+    }
+
+    IEnumerator AudioUp()
+    {
+        while(m_audioSource.volume < 1.0f)
+        {
+            m_audioSource.volume += 10.0f * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        m_audioSource.volume = 1.0f;
+    }
+
+    IEnumerator AudioDown()
+    {
+        while(m_audioSource.volume > 0.1f)
+        {
+            m_audioSource.volume -= 10.0f * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        m_audioSource.volume = 0.1f;
     }
 
     private void OnDrawGizmos()

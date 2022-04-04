@@ -122,6 +122,7 @@ public class CharacterKiller : MonoBehaviour
             joint.SetPdParamters(200.0f, 2.0f, 200.0f, 2.0f, 100.0f);
             joint.connectedBody = f.footObjectPhy.GetComponent<Rigidbody>();
             Destroy(f.footObjectPhy.GetComponent<VelocityController>());
+            Destroy(f.footObjectPhy.GetComponent<OnCollisionPlay>());
 
             m_gameObjectsFromKill.Add(f.footObjectPhy);
         }
@@ -130,6 +131,13 @@ public class CharacterKiller : MonoBehaviour
         Destroy(m_playerTransform.GetComponentInChildren<WalkAnimator>());
         Destroy(m_playerTransform.GetComponentInChildren<CharacterController>());
         Destroy(m_playerTransform.GetComponentInChildren<WalkBody>());
+
+        /* Destroy sounds */
+
+        foreach(OnCollisionPlay op in GetComponentsInChildren<OnCollisionPlay>())
+        {
+            Destroy(op);
+        }
 
         /* De-parent all hands */
 

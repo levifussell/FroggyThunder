@@ -24,6 +24,8 @@ public class ArmController : MonoBehaviour
 
     GameObject m_cameraFollowIndicator;
 
+    int m_noPlayerMask;
+
     private void Awake()
     {
         m_cameraFollowIndicator = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -32,6 +34,8 @@ public class ArmController : MonoBehaviour
 
         m_originParent = transform.parent;
         m_originArmPosLocal = transform.localPosition;
+
+        m_noPlayerMask = ~LayerMask.GetMask("Player");
     }
 
     // Start is called before the first frame update
@@ -59,7 +63,7 @@ public class ArmController : MonoBehaviour
             else
             {
                 Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(clickRay, out RaycastHit hit, 100.0f, ~0, QueryTriggerInteraction.Collide))
+                if (Physics.Raycast(clickRay, out RaycastHit hit, 100.0f, m_noPlayerMask, QueryTriggerInteraction.Collide))
                 {
                     Vector3 hitDiff = hit.point - originArmPosGlobal;
                     Vector3 targetPos = originArmPosGlobal + hitDiff.normalized * Mathf.Min(hitDiff.magnitude, m_maxDistance);
@@ -110,6 +114,7 @@ public class ArmController : MonoBehaviour
 
     void LaunchReturnArm()
     {
+        m_cameraFollowIndicator.transform.position = Vector3.zero;
         StopAllCoroutines();
         StartCoroutine(ReturnToArm());
     }

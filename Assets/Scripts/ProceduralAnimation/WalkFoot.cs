@@ -42,7 +42,7 @@ namespace ProceduralAnimation
             }
         }
 
-        public static WalkFoot Build(Transform parent, float m_footRadius, float m_footSpeed, float m_footStepHeightMin, float m_footStepHeightMax)
+        public static WalkFoot Build(Transform parent, float m_footRadius, float m_footSpeed, float m_footStepHeightMin, float m_footStepHeightMax, AudioClip footStepClip)
         {
             GameObject footObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Destroy(footObject.GetComponent<Collider>());
@@ -68,6 +68,11 @@ namespace ProceduralAnimation
 
             VelocityController vel = footObjectPhy.AddComponent<VelocityController>();
             vel.targetTransform = footObject.transform;
+
+            if(footStepClip != null)
+            {
+                OnCollisionPlay.Attach3DWithAudioClip(footObjectPhy, footStepClip);
+            }
 
             foot.m_footObjectKin = footObject;
             foot.m_footObjectPhy = footObjectPhy;

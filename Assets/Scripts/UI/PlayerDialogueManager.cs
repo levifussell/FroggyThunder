@@ -15,8 +15,8 @@ public class PlayerDialogueManager : MonoBehaviour
 
     /* Objects to Track */
 
-    [SerializeField]
-    Transform m_monsterTransform = null;
+    //[SerializeField]
+    //public Transform m_monsterTransform = null;
 
     [SerializeField]
     CameraController m_cameraController = null;
@@ -27,6 +27,7 @@ public class PlayerDialogueManager : MonoBehaviour
 
     bool m_scenarioIntro1 = false;
     bool m_scenarioIntro2 = false;
+    bool m_scenarioGrabInstruction = false;
     bool m_scenarioPlayerSeesMonster = false;
     bool m_scenarioPlayerSeesAltar = false;
     bool m_scenarioPlayerSeesBody = false;
@@ -42,15 +43,20 @@ public class PlayerDialogueManager : MonoBehaviour
 
         /* Check for scenarios */
 
-        if(!m_scenarioIntro1 && m_startTimer > 1.0f)
+        if(!m_scenarioIntro1 && m_startTimer > 3.0f)
         {
             m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[0]);
             m_scenarioIntro1 = true;
         }
-        else if(!m_scenarioIntro2 && m_startTimer > 7.0f)
+        else if(!m_scenarioIntro2 && m_startTimer > 10.0f)
         {
             m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[1]);
             m_scenarioIntro2 = true;
+        }
+        else if(!m_scenarioGrabInstruction && m_startTimer > 17.0f)
+        {
+            m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[5]);
+            m_scenarioGrabInstruction = true;
         }
 
         if (Physics.SphereCast(new Ray(m_playerTransform.position, m_playerTransform.forward), 0.4f, out RaycastHit hit, 10.0f, ~0, QueryTriggerInteraction.Ignore))
@@ -112,6 +118,7 @@ public class PlayerDialogueManager : MonoBehaviour
         "What in the f*uit fly is that thing!",
         "Is that MY body??",
         "Oh geez...that's not an altar. Tell me that's not an altar.",
+        "[Left click to grab]",
     };
 
     static string[] RANDOM_DIALOGUE_OPTIONS = 
