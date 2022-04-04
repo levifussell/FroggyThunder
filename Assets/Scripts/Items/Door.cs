@@ -27,11 +27,15 @@ public class Door : MonoBehaviour
     Vector3 m_startPositionGlobal;
     Vector3 m_endPositionGlobal;
 
+    AudioSource m_audioSource = null;
+
 
     private void Awake()
     {
         m_startPositionGlobal = transform.position;
         m_endPositionGlobal = transform.TransformPoint(m_endPositionLocal);
+
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -58,6 +62,9 @@ public class Door : MonoBehaviour
 
     IEnumerator MoveToTarget(Vector3 target)
     {
+        m_audioSource.loop = true;
+        m_audioSource.Play();
+
         Vector3 diff;
         do
         {
@@ -68,6 +75,7 @@ public class Door : MonoBehaviour
 
         } while (diff.sqrMagnitude > 1e-2f);
 
+        m_audioSource.Stop();
         m_doorVisual.transform.position = transform.position;
     }
 }
