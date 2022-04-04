@@ -26,7 +26,8 @@ public class CharacterKiller : MonoBehaviour
 
     /* Static Params */
 
-    static string FROG_SKIN_MATERIAL = "Material.003 (Instance)";
+    //static string FROG_SKIN_MATERIAL = "Material.003 (Instance)";
+    static string FROG_SKIN_MATERIAL = "CharacterArm";
     static Color FROG_DEATH_COLOR = new Color(255 / 255.0f, 253 / 255.0f, 196 / 255.0f); 
 
     private void Awake()
@@ -85,7 +86,7 @@ public class CharacterKiller : MonoBehaviour
         {
             foreach(Material m in mr.materials)
             {
-                if (m.name.Equals(FROG_SKIN_MATERIAL))
+                if (m.name.Contains(FROG_SKIN_MATERIAL))
                     m.color = FROG_DEATH_COLOR;
             }
         }
