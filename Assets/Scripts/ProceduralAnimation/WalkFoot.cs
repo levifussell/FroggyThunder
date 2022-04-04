@@ -106,7 +106,9 @@ namespace ProceduralAnimation
             if (!Application.isPlaying)
                 return;
 
+#if UNITY_EDITOR
             E_BezierCurves.EditorSceneDrawBezierCurve3(m_stepCurve);
+#endif
         }
 
         #region methods

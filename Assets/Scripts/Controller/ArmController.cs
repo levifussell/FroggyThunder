@@ -78,7 +78,9 @@ public class ArmController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         E_BezierCurves.EditorSceneDrawBezierCurve3(m_curveToTarget);
+#endif
     }
 
     #region custom methods

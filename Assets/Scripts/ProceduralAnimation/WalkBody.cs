@@ -33,8 +33,10 @@ namespace ProceduralAnimation
             if (!Application.isPlaying)
                 return;
 
+#if UNITY_EDITOR
             if(m_stepCurve != null)
                 E_BezierCurves.EditorSceneDrawBezierCurve3(m_stepCurve);
+#endif
         }
 
         public void StartNewStep()
