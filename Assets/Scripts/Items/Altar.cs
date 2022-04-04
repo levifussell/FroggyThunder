@@ -78,9 +78,10 @@ public class Altar : MonoBehaviour
                 BeginSacrificeEffect();
                 if(ck.Sacrifice(this.transform.TransformPoint(m_localSacrificePosition), transform.forward))
                 {
+                    ck.onSacrifice -= EndSacrificeEffect;
                     ck.onSacrifice += EndSacrificeEffect;
                 }
-                else
+                else if(m_isSacrificing)
                 {
                     EndSacrificeEffect();
                 }

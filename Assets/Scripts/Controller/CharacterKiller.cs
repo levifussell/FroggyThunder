@@ -26,8 +26,8 @@ public class CharacterKiller : MonoBehaviour
 
     /* Static Params */
 
-    //static string FROG_SKIN_MATERIAL = "Material.003 (Instance)";
     static string FROG_SKIN_MATERIAL = "CharacterArm";
+    static string FROG_SKIN_MATERIAL2 = "Material.003";
     static Color FROG_DEATH_COLOR = new Color(255 / 255.0f, 253 / 255.0f, 196 / 255.0f); 
 
     private void Awake()
@@ -80,13 +80,18 @@ public class CharacterKiller : MonoBehaviour
 
         m_gameObjectsFromKill = new List<GameObject>();
 
+        /* Play Death Audio */
+
+        AudioSource acPlayer = m_playerTransform.GetComponentInChildren<AudioSource>();
+        acPlayer.Play();
+
         /* Turn into skeleton */
 
         foreach(MeshRenderer mr in m_playerTransform.GetComponentsInChildren<MeshRenderer>())
         {
             foreach(Material m in mr.materials)
             {
-                if (m.name.Contains(FROG_SKIN_MATERIAL))
+                if (m.name.Contains(FROG_SKIN_MATERIAL) || m.name.Contains(FROG_SKIN_MATERIAL2))
                     m.color = FROG_DEATH_COLOR;
             }
         }
@@ -101,6 +106,9 @@ public class CharacterKiller : MonoBehaviour
             joint.SetPdParamters(200.0f, 2.0f, 200.0f, 2.0f, 100.0f);
             joint.connectedBody = h.GetComponent<Rigidbody>();
             Destroy(h.GetComponent<VelocityController>());
+
+            MeshRenderer mr = h.GetComponent<MeshRenderer>();
+            mr.material.color = Color.white;
 
             m_gameObjectsFromKill.Add(ac.m_phyShoulder.gameObject);
             m_gameObjectsFromKill.Add(h);
@@ -262,7 +270,7 @@ public class CharacterKiller : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
 
-            Debug.Log("Floating " + diff.magnitude);
+            //Debug.Log("Floating " + diff.magnitude);
 
             totalSacrificeTime += Time.fixedDeltaTime;
             if (totalSacrificeTime > MAX_SACRIFICE_TIME)
@@ -308,7 +316,7 @@ public class CharacterKiller : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
 
-            Debug.Log("Rotatine " + angle);
+            //Debug.Log("Rotatine " + angle);
 
             totalSacrificeTime += Time.fixedDeltaTime;
             if (totalSacrificeTime > MAX_SACRIFICE_TIME)
@@ -357,7 +365,7 @@ public class CharacterKiller : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
             explodeTimer -= Time.fixedDeltaTime;
-            Debug.Log("Explode time " + explodeTimer);
+            //Debug.Log("Explode time " + explodeTimer);
         }
 
         onSacrifice?.Invoke();

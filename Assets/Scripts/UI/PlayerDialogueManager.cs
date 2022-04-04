@@ -28,16 +28,22 @@ public class PlayerDialogueManager : MonoBehaviour
     bool m_scenarioIntro1 = false;
     bool m_scenarioIntro2 = false;
     bool m_scenarioGrabInstruction = false;
+    bool m_scenarioGrabInstruction2 = false;
     bool m_scenarioPlayerSeesMonster = false;
     bool m_scenarioPlayerSeesAltar = false;
     bool m_scenarioPlayerSeesBody = false;
 
     private void Update()
     {
-        m_startTimer += Time.deltaTime;
-
         if (m_cameraController.followTransform == null)
             return;
+
+        if(m_startTimer == 0)
+        {
+            m_cameraController.followTransform.GetComponent<CharacterController>().enabled = false;
+        }
+
+        m_startTimer += Time.deltaTime;
 
         Transform m_playerTransform = m_cameraController.followTransform;
 
@@ -57,6 +63,13 @@ public class PlayerDialogueManager : MonoBehaviour
         {
             m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[5]);
             m_scenarioGrabInstruction = true;
+        }
+        else if(!m_scenarioGrabInstruction2 && m_startTimer > 23.0f)
+        {
+            m_dialogueUI.BeginNewDialogue(INSTRUCTION_DIALOGUE_OPTIONS[6]);
+            m_scenarioGrabInstruction2 = true;
+
+            m_cameraController.followTransform.GetComponent<CharacterController>().enabled = true;
         }
 
         if (Physics.SphereCast(new Ray(m_playerTransform.position, m_playerTransform.forward), 1.0f, out RaycastHit hit, 10.0f, ~0, QueryTriggerInteraction.Ignore))
@@ -124,6 +137,7 @@ public class PlayerDialogueManager : MonoBehaviour
         "Is that MY body??",
         "Oh geez...that's not an altar. Tell me that's not an altar.",
         "[Left click to grab]",
+        "[WASD to move]",
     };
 
     static string[] RANDOM_DIALOGUE_OPTIONS = 

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8361284463421746793}
   m_Layer: 7
   m_Name: Flashlight
-  m_TagString: Untagged
+  m_TagString: Grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackHand: {fileID: 0}
+  trackJoint: {fileID: 0}
   rigidbody: {fileID: 0}
+  light: {fileID: 0}
+  isOn: 1
 --- !u!54 &8361284463421746793
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -158,7 +158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1356e28fe24bf540984f9812bbcd688, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.86
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f1356e28fe24bf540984f9812bbcd688, type: 3}
       propertyPath: m_LocalPosition.z
@@ -604,9 +604,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2607406529497547068, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607406530040001582, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
     - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
       propertyPath: m_Name
       value: Crate
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
@@ -845,7 +857,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381037998}
   m_LocalRotation: {x: -0, y: -0.3826832, z: -0, w: 0.9238796}
-  m_LocalPosition: {x: -16.604, y: 0.17155096, z: -16.414}
+  m_LocalPosition: {x: -16.521, y: 0.17155096, z: -16.497}
   m_LocalScale: {x: 1.3917, y: 1, z: 3.0753295}
   m_Children:
   - {fileID: 1443915858}
@@ -1291,9 +1303,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2607406529497547068, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607406530040001582, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
     - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
       propertyPath: m_Name
       value: Crate (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
@@ -1533,9 +1557,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2607406529497547068, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607406530040001582, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
     - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
       propertyPath: m_Name
       value: Crate (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
@@ -1593,7 +1629,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 100
+    m_FontSize: 90
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1632,8 +1668,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 1300, y: 400}
+  m_AnchoredPosition: {x: 0, y: 6}
+  m_SizeDelta: {x: 1220, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &874643389
 GameObject:
@@ -1720,7 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
+  m_Color: {r: 0.31132078, g: 0.3110977, b: 0.3069153, a: 0.8352941}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2257,9 +2293,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2607406529497547068, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607406530040001582, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
     - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
       propertyPath: m_Name
       value: Crate (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
@@ -7175,9 +7223,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2607406529497547068, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607406530040001582, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
     - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
       propertyPath: m_Name
       value: Crate (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
@@ -7549,9 +7609,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2607406529497547068, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607406530040001582, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Grabbable
+      objectReference: {fileID: 0}
     - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
       propertyPath: m_Name
       value: Crate (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045486351782465568, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f774651824ec33d4dabbe20ff14b1888, type: 3}
@@ -7586,7 +7658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerPrefab: {fileID: 8761974772246822035, guid: 5c2fbbeb8d71a3f4faa96d302c385b8b, type: 3}
   m_monsterPrefab: {fileID: 1777318841668631914, guid: 1303c7965c5ba884fbb08202807071f7, type: 3}
-  m_timeUntilMonsterSpawn: 20
+  m_timeUntilMonsterSpawn: 50
   m_spawnPositions:
   - {x: -7.973507, y: 0, z: 12.943655}
   - {x: 8.874266, y: 0, z: -8.103995}

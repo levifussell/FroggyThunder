@@ -95,6 +95,9 @@ namespace ProceduralAnimation
                     armController = m_upperArmObj.AddComponent<ArmController>();
                     ArmCollider armCollider = armObjectPhy.AddComponent<ArmCollider>();
                     armController.m_armCollider = armCollider;
+
+                    armController.m_armMaterial = armJoint.GetComponent<MeshRenderer>().material;
+                    armController.m_handMaterial = armObjectPhy.GetComponent<MeshRenderer>().material;
                 }
                 else if(i == 0)
                 {

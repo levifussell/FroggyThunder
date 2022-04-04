@@ -15,6 +15,13 @@ public class ArmController : MonoBehaviour
     [SerializeField]
     public ArmCollider m_armCollider = null;
 
+    public Material m_handMaterial = null;
+    public Material m_armMaterial = null;
+
+    Color m_baseArmColor;
+    //Color m_selectColor = new Color(190.0f / 255.0f, 242.0f / 255.0f, 60.0f / 255.0f);
+    Color m_selectColor = new Color(255.0f / 255.0f, 232.0f / 255.0f, 60.0f / 255.0f);
+
     Transform m_originParent;
     Vector3 m_originArmPosLocal;
     Vector3 originArmPosGlobal { get => m_originParent.TransformPoint(m_originArmPosLocal); }
@@ -41,6 +48,8 @@ public class ArmController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_baseArmColor = m_armMaterial.color;
+
         m_armCollider.onCollide += LaunchReturnArm;
         GoToNewTargetGlobal(transform.position);
     }
@@ -59,11 +68,13 @@ public class ArmController : MonoBehaviour
             if (m_armCollider.isGrabbing)
             {
                 m_armCollider.DropGrabbedObject();
+                m_armMaterial.color = m_baseArmColor;
+                m_handMaterial.color = m_baseArmColor;
             }
             else
             {
                 Ray clickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(clickRay, out RaycastHit hit, 100.0f, m_noPlayerMask, QueryTriggerInteraction.Collide))
+                if (Physics.Raycast(clickRay, out RaycastHit hit, 100.0f, m_noPlayerMask, QueryTriggerInteraction.Ignore))
                 {
                     Vector3 hitDiff = hit.point - originArmPosGlobal;
                     Vector3 targetPos = originArmPosGlobal + hitDiff.normalized * Mathf.Min(hitDiff.magnitude, m_maxDistance);
@@ -97,6 +108,9 @@ public class ArmController : MonoBehaviour
 
     IEnumerator GoToTarget()
     {
+        m_armMaterial.color = m_selectColor;
+        m_handMaterial.color = m_selectColor;
+
         while(m_curveTimer < 1.0f)
         {
             m_curveTimer = Mathf.Clamp01(m_curveTimer + m_speed * Time.deltaTime);
@@ -124,6 +138,14 @@ public class ArmController : MonoBehaviour
 
     IEnumerator ReturnToArm()
     {
+        yield return new WaitForSeconds(0.5f);
+
+        if(!m_armCollider.isGrabbing)
+        {
+            m_armMaterial.color = m_baseArmColor;
+            m_handMaterial.color = m_baseArmColor;
+        }
+
         m_armCollider.detectGrabbing = false;
 
         transform.parent = m_originParent;

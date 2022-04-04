@@ -74,7 +74,7 @@ public class CameraController : MonoBehaviour
             m_pitch += pitchRate * Time.fixedDeltaTime;
             m_distance += distRate * Time.fixedDeltaTime;
 
-            Debug.Log(Mathf.Abs(m_pitch - newSettings.pitch));
+            //Debug.Log(Mathf.Abs(m_pitch - newSettings.pitch));
 
             yield return new WaitForFixedUpdate();
         }

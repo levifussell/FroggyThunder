@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,8 +33,12 @@ public class VelocityController : MonoBehaviour
         else
         {
             Vector3 diff = targetTransform.position - m_rigidBody.position;
-            if (diff.magnitude > 0.5f)
+            if (diff.magnitude > 0.5f || Double.IsNaN(diff[0]) || Double.IsNaN(diff[1])|| Double.IsNaN(diff[2])
+                || Double.IsNaN(m_rigidBody.velocity[0]) || Double.IsNaN(m_rigidBody.velocity[1])|| Double.IsNaN(m_rigidBody.velocity[2]))
+            {
+                m_rigidBody.velocity = Vector3.zero;
                 m_rigidBody.position = targetTransform.position;
+            }
             else
                 m_rigidBody.velocity = diff / Time.fixedDeltaTime;
 
