@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
+  m_AmbientSkyColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -6124,7 +6124,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 664c48a1eb2c41f4ca3422f56bd7051f, type: 2}
+  - {fileID: 2100000, guid: efd2f8007891a1741a02e8845de27cdc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6872,6 +6872,7 @@ MonoBehaviour:
   m_strideVelocityScale: 2
   m_maxLegDistance: 3
   m_characterController: {fileID: 0}
+  m_legMaterial: {fileID: 2100000, guid: efd2f8007891a1741a02e8845de27cdc, type: 2}
 --- !u!1 &1574517007
 GameObject:
   m_ObjectHideFlags: 0
