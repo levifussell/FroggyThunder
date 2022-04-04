@@ -21,7 +21,7 @@ public class ArmCollider : MonoBehaviour
             m_currentGrabbedRigidbody = rb;
 
             ConfigurableJoint grabJoint = gameObject.AddComponent<ConfigurableJoint>();
-            grabJoint.SetPdParamters(100.0f, 2.0f, 100.0f, 2.0f, 20.0f);
+            grabJoint.SetPdParamters(300.0f, 2.0f, 100.0f, 2.0f, 20.0f);
             grabJoint.connectedBody = rb;
             grabJoint.connectedMassScale = 30.0f;
 

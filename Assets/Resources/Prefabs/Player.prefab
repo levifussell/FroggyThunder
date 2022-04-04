@@ -55,7 +55,7 @@ MonoBehaviour:
   m_footStepHeightMax: 1
   m_footPlacementDistance: 0.3
   m_minFootStrideDistance: 0.5
-  m_maxFootStrideDistance: 1.2
+  m_maxFootStrideDistance: 1.5
   m_strideVelocityScale: 2
   m_maxLegDistance: 0.6
   m_characterController: {fileID: 8761974770581762663}
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b325de41eb0964eb26d85ee79bb949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_accelMag: 15
+  m_accelMag: 10
   m_velDecayRate: 0.95
   m_rotSpeed: 200
   m_phyRoot: {fileID: 8761974772462496633}

@@ -33,7 +33,8 @@ public class CharacterController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    //void Update()
+    private void FixedUpdate()
     {
         Vector3 accel = Vector3.zero;
         float verticalRotation = 0.0f;
@@ -66,8 +67,12 @@ public class CharacterController : MonoBehaviour
         accel = accel.normalized * m_accelMag;
         accel.y = 0.0f;
 
-        m_controlVelocity = m_velDecayRate * m_controlVelocity + accel * Time.deltaTime;
-        transform.position += m_controlVelocity * Time.deltaTime;
-        transform.rotation *= Quaternion.AngleAxis(verticalRotation * Time.deltaTime, Vector3.up);
+        //m_controlVelocity = m_velDecayRate * m_controlVelocity + accel * Time.deltaTime;
+        //transform.position += m_controlVelocity * Time.deltaTime;
+        //transform.rotation *= Quaternion.AngleAxis(verticalRotation * Time.deltaTime, Vector3.up);
+
+        m_controlVelocity = m_velDecayRate * m_controlVelocity + accel * Time.fixedDeltaTime;
+        transform.position += m_controlVelocity * Time.fixedDeltaTime;
+        transform.rotation *= Quaternion.AngleAxis(verticalRotation * Time.fixedDeltaTime, Vector3.up);
     }
 }
