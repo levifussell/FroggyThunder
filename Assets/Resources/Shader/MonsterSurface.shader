@@ -14,7 +14,7 @@ Shader "Custom/MonsterSurface"
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard fullforwardshadows vertex:vert
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
@@ -42,6 +42,13 @@ Shader "Custom/MonsterSurface"
         {
             UNITY_INITIALIZE_OUTPUT(Input, o);
             o.customColor = abs(v.normal);
+            //float c = tex2Dlod(_MainTex, o.uv_MainTex).r;
+            //float x = sin(v.vertex.x * 30.0f) * 0.2f;
+            //float y = sin(v.vertex.z * 30.0f) * 0.2f;
+            //v.vertex.y += sin(v.vertex.y * 30.0f);
+            float x = sin(v.vertex.x * 10000.0f) * 0.1f;
+            float y = sin(v.vertex.z * 1000.0f) * 1.0f;
+            v.vertex.xyz += v.normal * x * y;
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
@@ -49,6 +56,7 @@ Shader "Custom/MonsterSurface"
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
             o.Albedo = c.rgb;
+            o.Albedo *= IN.customColor;
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
