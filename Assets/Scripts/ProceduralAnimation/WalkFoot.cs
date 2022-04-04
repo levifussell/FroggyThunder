@@ -45,6 +45,8 @@ namespace ProceduralAnimation
         public static WalkFoot Build(Transform parent, float m_footRadius, float m_footSpeed, float m_footStepHeightMin, float m_footStepHeightMax, AudioClip footStepClip)
         {
             GameObject footObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            Destroy(footObject.GetComponent<MeshRenderer>());
+            Destroy(footObject.GetComponent<MeshFilter>());
             Destroy(footObject.GetComponent<Collider>());
             footObject.transform.parent = parent;
             footObject.name = "Foot";

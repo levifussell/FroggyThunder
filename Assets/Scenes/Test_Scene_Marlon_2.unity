@@ -7443,7 +7443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_doorVisual: {fileID: 331457554}
-  m_numSacrificesToOpen: 2
+  m_numSacrificesToOpen: 3
   m_endPositionLocal: {x: 0, y: 0, z: 1}
   m_shakeScale: 0.05
   m_moveSpeed: 0.1

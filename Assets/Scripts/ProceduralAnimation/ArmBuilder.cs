@@ -45,6 +45,8 @@ namespace ProceduralAnimation
 
                 float posAngle = ((2.0f * Mathf.PI) / m_numArms) * i;
                 GameObject m_upperArmObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                Destroy(m_upperArmObj.GetComponent<MeshRenderer>());
+                Destroy(m_upperArmObj.GetComponent<MeshFilter>());
                 Destroy(m_upperArmObj.GetComponent<Collider>());
                 m_upperArmObj.transform.parent = transform;
                 m_upperArmObj.transform.localPosition = new Vector3(m_armOffset * Mathf.Cos(posAngle), -m_upperArmLength, m_armOffset * Mathf.Sin(posAngle));
