@@ -21,7 +21,7 @@ public class Flashlight : MonoBehaviour
         if(trackHand != null)
         {
             Vector3 diff = trackHand.position - rigidbody.position;
-            if (diff.magnitude > 1.0f)
+            if (diff.magnitude > 0.5f)
                 rigidbody.position = trackHand.position;
         }
     }

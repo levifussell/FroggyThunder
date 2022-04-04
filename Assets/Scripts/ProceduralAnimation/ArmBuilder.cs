@@ -112,6 +112,7 @@ namespace ProceduralAnimation
                     flashJoint.connectedBody = flashLightRb;
                     flashJoint.anchor = Vector3.zero;
                     flashJoint.connectedAnchor = Vector3.zero;
+                    flashJoint.connectedMassScale = 100.0f;
 
                     flashlightObj = flashLight.GetComponent<Flashlight>();
                     flashlightObj.trackHand = physHands[0].transform;

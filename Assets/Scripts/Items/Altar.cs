@@ -11,6 +11,9 @@ public class Altar : MonoBehaviour
     ParticleSystem m_sacrificeParticles = null;
 
     [SerializeField]
+    Light m_sacrificeLight = null;
+
+    [SerializeField]
     GameObject m_altarTop = null;
 
     [SerializeField]
@@ -30,6 +33,8 @@ public class Altar : MonoBehaviour
         Color c = m_altarTopMaterial.color;
         c = new Color(m_altarTopMaterial.color.r, m_altarTopMaterial.color.g, m_altarTopMaterial.color.b, 0.0f);
         m_altarTopMaterial.color = c;
+
+        m_sacrificeLight.intensity = 0.0f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,6 +84,7 @@ public class Altar : MonoBehaviour
     {
         m_isSacrificing = true;
         StopAllCoroutines();
+        StartCoroutine(LightTurnOn());
         StartCoroutine(RunBeginSacrificeEffect());
     }
 
@@ -87,6 +93,7 @@ public class Altar : MonoBehaviour
         m_isSacrificing = false;
         m_doorToOpen.AddNewSacrifice();
         StopAllCoroutines();
+        StartCoroutine(LightTurnOff());
         StartCoroutine(RunEndSacrificeEffect());
     }
 
@@ -102,6 +109,7 @@ public class Altar : MonoBehaviour
         {
             c = new Color(c.r, c.g, c.b, c.a + 1.0f * Time.fixedDeltaTime);
             m_altarTopMaterial.color = c;
+
             yield return new WaitForFixedUpdate();
         }
 
@@ -121,11 +129,34 @@ public class Altar : MonoBehaviour
         {
             c = new Color(c.r, c.g, c.b, c.a - 1.0f * Time.fixedDeltaTime);
             m_altarTopMaterial.color = c;
+
             yield return new WaitForFixedUpdate();
         }
 
         c = new Color(c.r, c.g, c.b, 0.0f);
         m_altarTopMaterial.color = c;
+    }
+
+    IEnumerator LightTurnOn()
+    {
+        while(m_sacrificeLight.intensity < 15.0f)
+        {
+            m_sacrificeLight.intensity += 10.0f * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        m_sacrificeLight.intensity = 15.0f;
+    }
+
+    IEnumerator LightTurnOff()
+    {
+        while(m_sacrificeLight.intensity > 0.0f)
+        {
+            m_sacrificeLight.intensity -= 10.0f * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        m_sacrificeLight.intensity = 0.0f;
     }
 
     private void OnDrawGizmos()

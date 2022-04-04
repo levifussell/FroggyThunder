@@ -32,7 +32,7 @@ public class VelocityController : MonoBehaviour
         else
         {
             Vector3 diff = targetTransform.position - m_rigidBody.position;
-            if (diff.magnitude > 1.0f)
+            if (diff.magnitude > 0.5f)
                 m_rigidBody.position = targetTransform.position;
             else
                 m_rigidBody.velocity = diff / Time.fixedDeltaTime;

@@ -97,7 +97,7 @@ public class CharacterKiller : MonoBehaviour
         {
             ConfigurableJoint joint = ac.m_phyShoulder.gameObject.AddComponent<ConfigurableJoint>();
             joint.SetPositionJointMotions(ConfigurableJointMotion.Locked);
-            joint.SetPdParamters(1000.0f, 10.0f, 1000.0f, 10.0f, 200.0f);
+            joint.SetPdParamters(200.0f, 2.0f, 200.0f, 2.0f, 100.0f);
             joint.connectedBody = h.GetComponent<Rigidbody>();
             Destroy(h.GetComponent<VelocityController>());
 
@@ -118,7 +118,7 @@ public class CharacterKiller : MonoBehaviour
         {
             ConfigurableJoint joint = wa.m_body.gameObject.AddComponent<ConfigurableJoint>();
             joint.SetPositionJointMotions(ConfigurableJointMotion.Locked);
-            joint.SetPdParamters(1000.0f, 10.0f, 1000.0f, 10.0f, 200.0f);
+            joint.SetPdParamters(200.0f, 2.0f, 200.0f, 2.0f, 100.0f);
             joint.connectedBody = f.footObjectPhy.GetComponent<Rigidbody>();
             Destroy(f.footObjectPhy.GetComponent<VelocityController>());
 
@@ -152,6 +152,10 @@ public class CharacterKiller : MonoBehaviour
                 r.isKinematic = false;
                 r.useGravity = true;
                 r.tag = "Grabbable";
+                r.drag = 1.0f;
+                r.angularDrag = 1.0f;
+                r.velocity *= 0.0f;
+                r.angularVelocity *= 0.0f;
             }
         }
 
