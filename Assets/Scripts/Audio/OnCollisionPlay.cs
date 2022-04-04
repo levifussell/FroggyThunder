@@ -19,6 +19,7 @@ public class OnCollisionPlay : MonoBehaviour
         ac.clip = clip;
         ac.spatialBlend = 1.0f;
         ac.maxDistance = 10.0f;
+        ac.volume = 0.3f;
         ac.rolloffMode = AudioRolloffMode.Linear;
 
         return op;
