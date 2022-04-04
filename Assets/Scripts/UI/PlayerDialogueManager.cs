@@ -15,8 +15,8 @@ public class PlayerDialogueManager : MonoBehaviour
 
     /* Objects to Track */
 
-    [SerializeField]
-    Transform m_monsterTransform = null;
+    //[SerializeField]
+    //public Transform m_monsterTransform = null;
 
     [SerializeField]
     CameraController m_cameraController = null;

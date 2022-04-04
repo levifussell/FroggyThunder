@@ -10,7 +10,13 @@ public class PlayerSpawner : MonoBehaviour
     GameObject m_playerPrefab = null;
 
     [SerializeField]
-    Transform m_monsterTransform = null;
+    GameObject m_monsterPrefab = null;
+
+    [SerializeField]
+    float m_timeUntilMonsterSpawn = 10.0f;
+
+    //[SerializeField]
+    //Transform m_monsterTransform = null;
 
     [SerializeField]
     public List<Vector3> m_spawnPositions = new List<Vector3>();
@@ -20,6 +26,9 @@ public class PlayerSpawner : MonoBehaviour
 
     [SerializeField]
     CameraController m_cameraController = null;
+
+    //[SerializeField]
+    //PlayerDialogueManager m_dialogueManager = null;
 
     [SerializeField]
     float m_spawnDelayTimeSeconds = 1.0f;
@@ -39,13 +48,29 @@ public class PlayerSpawner : MonoBehaviour
         SpawnNewPlayer();
     }
 
+    private void Start()
+    {
+        StartCoroutine(TimedSpawnMonster(m_timeUntilMonsterSpawn));
+    }
+
     void SpawnNewPlayer()
     {
-        // Find best spawn point.
+        MonsterController mController = FindObjectOfType<MonsterController>();
 
-        List<float> distList = m_spawnPositions.Select(x => (x - m_monsterTransform.position).magnitude).ToList();
-        int minIndex = distList.IndexOf(distList.Max());
-        SpawnNewPlayer(minIndex);
+        if (mController == null)
+        {
+            SpawnNewPlayer(2);
+        }
+        else
+        {
+            Transform m_monsterTransform = mController.transform;
+
+            // Find best spawn point.
+
+            List<float> distList = m_spawnPositions.Select(x => (x - m_monsterTransform.position).magnitude).ToList();
+            int minIndex = distList.IndexOf(distList.Max());
+            SpawnNewPlayer(minIndex);
+        }
     }
 
     void SpawnNewPlayer(int index)
@@ -58,6 +83,7 @@ public class PlayerSpawner : MonoBehaviour
         newPlayer.transform.rotation = spawnRotation;
 
         m_cameraController.followTransform = newPlayer.GetComponentInChildren<CharacterController>().transform;
+        m_cameraController.RevertToOriginalSettings();
 
         CharacterKiller characterKiller = newPlayer.GetComponent<CharacterKiller>();
         characterKiller.onKill += StartTimedSpawnNewPlayer;
@@ -72,6 +98,34 @@ public class PlayerSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(timeSeconds);
         SpawnNewPlayer();
+    }
+    void SpawnMonster()
+    {
+        Transform m_playerTransform = FindObjectOfType<CharacterController>().transform;
+
+        // Find best spawn point.
+
+        List<float> distList = m_spawnPositions.Select(x => (x - m_playerTransform.position).magnitude).ToList();
+        int minIndex = distList.IndexOf(distList.Max());
+        SpawnMonster(minIndex);
+    }
+
+    void SpawnMonster(int index)
+    {
+        Vector3 spawnPosition = m_spawnPositions[index];
+        Quaternion spawnRotation = m_spawnRotations[index];
+
+        GameObject newMonster = GameObject.Instantiate(m_monsterPrefab);
+        newMonster.transform.position = new Vector3(spawnPosition.x, newMonster.transform.position.y, spawnPosition.z);
+        newMonster.transform.rotation = spawnRotation;
+
+        //m_dialogueManager.m_monsterTransform = newMonster.transform;
+    }
+
+    IEnumerator TimedSpawnMonster(float timeSeconds)
+    {
+        yield return new WaitForSeconds(timeSeconds);
+        SpawnMonster();
     }
 
     private void OnDrawGizmos()

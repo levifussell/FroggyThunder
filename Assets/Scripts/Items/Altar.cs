@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class Altar : MonoBehaviour
 
     [SerializeField]
     Door m_doorToOpen = null;
+
+    Flashlight m_previousFlash;
 
     Queue<CharacterKiller> m_sacrificeList = new Queue<CharacterKiller>();
 
@@ -102,8 +105,10 @@ public class Altar : MonoBehaviour
         m_sacrificeParticles.Play();
 
         Color c = m_altarTopMaterial.color;
-        //c = new Color(m_altarTopMaterial.color.r, m_altarTopMaterial.color.g, m_altarTopMaterial.color.b, 0.0f);
-        //m_altarTopMaterial.color = c;
+
+        // turn off flashlight.
+        m_previousFlash = FindObjectsOfType<Flashlight>().Where(x => x.isOn).ToArray()[0];
+        m_previousFlash.TurnOff();
 
         while (c.a < 1.0f)
         {
@@ -122,8 +127,9 @@ public class Altar : MonoBehaviour
         m_sacrificeParticles.Stop();
 
         Color c = m_altarTopMaterial.color;
-        //c = new Color(m_altarTopMaterial.color.r, m_altarTopMaterial.color.g, m_altarTopMaterial.color.b, 1.0f);
-        //m_altarTopMaterial.color = c;
+
+        // turn on flashlight.
+        m_previousFlash.TurnOn();
 
         while (c.a > 0.0f)
         {
