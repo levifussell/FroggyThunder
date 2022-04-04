@@ -7,6 +7,7 @@ namespace MathUtils
 {
     namespace Editor
     {
+#if UNITY_EDITOR
         public static class E_BezierCurves
         {
             public static void EditorSceneDrawBezierCurve3(BezierCurve3 curve3, int steps = 100, float sphereRadius = 0.03f)
@@ -28,5 +29,6 @@ namespace MathUtils
                 Gizmos.DrawSphere(curve3.p2, sphereRadius);
             }
         }
+#endif
     }
 }
