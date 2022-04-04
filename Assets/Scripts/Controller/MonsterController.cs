@@ -58,11 +58,13 @@ public class MonsterController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    //void Update()
+    void FixedUpdate()
     {
         /* Update Pull timer */
 
-        m_monsterPullTimer += Time.deltaTime;
+        //m_monsterPullTimer += Time.deltaTime;
+        m_monsterPullTimer += Time.fixedDeltaTime;
 
         /* Compute Vision Effects */
 
@@ -128,9 +130,13 @@ public class MonsterController : MonoBehaviour
 
         /* Apply motion */
 
-        m_controlVelocity = m_velDecayRate * m_controlVelocity + pullScale * accel * Time.deltaTime;
-        transform.position += m_controlVelocity * Time.deltaTime;
-        transform.rotation *= Quaternion.AngleAxis(angAccel * Time.deltaTime, Vector3.up);
+        //m_controlVelocity = m_velDecayRate * m_controlVelocity + pullScale * accel * Time.deltaTime;
+        //transform.position += m_controlVelocity * Time.deltaTime;
+        //transform.rotation *= Quaternion.AngleAxis(angAccel * Time.deltaTime, Vector3.up);
+
+        m_controlVelocity = m_velDecayRate * m_controlVelocity + pullScale * accel * Time.fixedDeltaTime;
+        transform.position += m_controlVelocity * Time.fixedDeltaTime;
+        transform.rotation *= Quaternion.AngleAxis(angAccel * Time.fixedDeltaTime, Vector3.up);
     }
 
     private void OnDrawGizmos()
