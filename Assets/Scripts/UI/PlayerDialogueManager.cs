@@ -59,7 +59,7 @@ public class PlayerDialogueManager : MonoBehaviour
             m_scenarioGrabInstruction = true;
         }
 
-        if (Physics.SphereCast(new Ray(m_playerTransform.position, m_playerTransform.forward), 0.4f, out RaycastHit hit, 10.0f, ~0, QueryTriggerInteraction.Ignore))
+        if (Physics.SphereCast(new Ray(m_playerTransform.position, m_playerTransform.forward), 1.0f, out RaycastHit hit, 10.0f, ~0, QueryTriggerInteraction.Ignore))
         {
             if (!m_scenarioPlayerSeesMonster)
             {
@@ -79,7 +79,7 @@ public class PlayerDialogueManager : MonoBehaviour
                 }
             }
 
-            if (!m_scenarioPlayerSeesBody)
+            if (!m_scenarioPlayerSeesBody && m_playerTransform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Character"))
                 {

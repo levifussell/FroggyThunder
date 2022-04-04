@@ -60,6 +60,7 @@ public class DialogueUI : MonoBehaviour
 
     public void CloseDialogue()
     {
+        StopAllCoroutines();
         StartCoroutine(DoCloseDialogue());
     }
 
