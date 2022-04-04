@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
+  m_AmbientSkyColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -6124,7 +6124,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 664c48a1eb2c41f4ca3422f56bd7051f, type: 2}
+  - {fileID: 2100000, guid: efd2f8007891a1741a02e8845de27cdc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6503,14 +6503,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.495283, b: 0.495283, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: e7d3b360ca261094ebc6683c684fb459, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6865,13 +6865,14 @@ MonoBehaviour:
   m_footRadius: 0.4
   m_footSpeed: 2
   m_footStepHeightMin: 0.3
-  m_footStepHeightMax: 3
+  m_footStepHeightMax: 1.5
   m_footPlacementDistance: 3
   m_minFootStrideDistance: 0.5
   m_maxFootStrideDistance: 5
   m_strideVelocityScale: 2
   m_maxLegDistance: 3
   m_characterController: {fileID: 0}
+  m_legMaterial: {fileID: 2100000, guid: efd2f8007891a1741a02e8845de27cdc, type: 2}
 --- !u!1 &1574517007
 GameObject:
   m_ObjectHideFlags: 0

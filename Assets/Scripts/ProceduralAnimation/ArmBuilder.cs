@@ -24,6 +24,9 @@ namespace ProceduralAnimation
         [SerializeField]
         float m_upperArmRadius = 0.1f;
 
+        [SerializeField]
+        Material m_armMaterial = null;
+
         public ArmController armController = null;
 
         public GameObject[] physHands;
@@ -81,7 +84,7 @@ namespace ProceduralAnimation
 
                 /* Build Arm Connection */
 
-                WalkLeg armJoint = WalkLeg.Build(transform, shoulderAttachObj.transform, armObjectPhy.transform, m_upperArmRadius * 0.8f);
+                WalkLeg armJoint = WalkLeg.Build(transform, shoulderAttachObj.transform, armObjectPhy.transform, m_upperArmRadius * 0.8f, m_armMaterial);
                 armJoint.gameObject.layer = gameObject.layer;
                 armJoint.name = "Leg";
 
