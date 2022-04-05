@@ -26,6 +26,8 @@ Play on Itch.io: https://leefu.itch.io/froggy-thunder-toad-al-recal
 
 **Left Click - Grab -or- Drop** 🖐
 
+🎵 **[For the best experience, sound is encouraged.]** 🎵
+
 ------------------------------------
 
 ![ScreenShot_2.png](Screenshots/img3.png)
