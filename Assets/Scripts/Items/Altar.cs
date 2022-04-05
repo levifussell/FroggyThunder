@@ -81,9 +81,9 @@ public class Altar : MonoBehaviour
                     ck.onSacrifice -= EndSacrificeEffect;
                     ck.onSacrifice += EndSacrificeEffect;
                 }
-                else if(m_isSacrificing)
+                else if (m_isSacrificing)
                 {
-                    EndSacrificeEffect();
+                    EndSacrificeEffectNoAdd();
                 }
             }
         }
@@ -100,8 +100,12 @@ public class Altar : MonoBehaviour
 
     void EndSacrificeEffect()
     {
-        m_isSacrificing = false;
         m_doorToOpen.AddNewSacrifice();
+        EndSacrificeEffectNoAdd();
+    }
+    void EndSacrificeEffectNoAdd()
+    {
+        m_isSacrificing = false;
         StopAllCoroutines();
         StartCoroutine(LightTurnOff());
         StartCoroutine(AudioDown());
